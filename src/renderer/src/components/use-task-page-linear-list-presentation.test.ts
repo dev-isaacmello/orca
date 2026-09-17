@@ -25,12 +25,43 @@ function issue(identifier: string, status: string, teamId = 'team-1'): LinearIss
 const TODO_ONE = issue('COR-1', 'Todo')
 const TODO_TWO = issue('COR-2', 'Todo')
 const DONE_ONE = issue('COR-3', 'Done')
+const ALL_ISSUES = [TODO_ONE, TODO_TWO, DONE_ONE]
+
+type LinearView = { kind: 'list' } | { kind: 'project'; id: string } | { kind: 'view'; id: string }
+
+const MY_ISSUES: LinearView = { kind: 'list' }
+
+function viewFields(view: LinearView) {
+  if (view.kind === 'project') {
+    return {
+      linearMode: 'projects',
+      linearProjectTab: 'issues',
+      selectedLinearProject: { id: view.id },
+      selectedLinearCustomView: null
+    }
+  }
+  if (view.kind === 'view') {
+    return {
+      linearMode: 'views',
+      linearProjectTab: 'overview',
+      selectedLinearProject: null,
+      selectedLinearCustomView: { id: view.id, model: 'issue' }
+    }
+  }
+  return {
+    linearMode: 'issues',
+    linearProjectTab: 'overview',
+    selectedLinearProject: null,
+    selectedLinearCustomView: null
+  }
+}
 
 function preludeModel(
   linearGroupBy: LinearGroupBy,
-  pagedLinearIssues: LinearIssue[]
+  pagedLinearIssues: LinearIssue[],
+  view: LinearView
 ): TaskPageLinearListProjectionPreludeModel {
-  // oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: the prelude model is a wide derived type, but the presentation hook reads only the seven fields listed here.
+  // oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: the prelude model is a wide derived type, but the presentation hook reads only the fields listed here.
   return {
     linearDisplayProperties: new Set<string>(),
     linearGroupBy,
@@ -38,7 +69,8 @@ function preludeModel(
     linearTeamOptions: [],
     linearTeamPropertyTouched: false,
     linearTeamSelection: new Set<string>(),
-    pagedLinearIssues
+    pagedLinearIssues,
+    ...viewFields(view)
   } as unknown as TaskPageLinearListProjectionPreludeModel
 }
 
@@ -56,12 +88,20 @@ function issueIdentifiers(rows: LinearIssueListRow[]): string[] {
 
 function renderGroupedList(
   linearGroupBy: LinearGroupBy = 'status',
-  issues: LinearIssue[] = [TODO_ONE, TODO_TWO, DONE_ONE]
+  issues: LinearIssue[] = [TODO_ONE, TODO_TWO, DONE_ONE],
+  view: LinearView = MY_ISSUES
 ) {
   return renderHook(
-    ({ groupBy, pagedIssues }: { groupBy: LinearGroupBy; pagedIssues: LinearIssue[] }) =>
-      useTaskPageLinearListPresentation(preludeModel(groupBy, pagedIssues)),
-    { initialProps: { groupBy: linearGroupBy, pagedIssues: issues } }
+    ({
+      groupBy,
+      pagedIssues,
+      activeView
+    }: {
+      groupBy: LinearGroupBy
+      pagedIssues: LinearIssue[]
+      activeView: LinearView
+    }) => useTaskPageLinearListPresentation(preludeModel(groupBy, pagedIssues, activeView)),
+    { initialProps: { groupBy: linearGroupBy, pagedIssues: issues, activeView: view } }
   )
 }
 
@@ -142,8 +182,8 @@ describe('useTaskPageLinearListPresentation collapse', () => {
     act(() => {
       view.result.current.toggleLinearSection('status:Todo')
     })
-    view.rerender({ groupBy: 'team', pagedIssues: [TODO_ONE, TODO_TWO, DONE_ONE] })
-    view.rerender({ groupBy: 'status', pagedIssues: [TODO_ONE, TODO_TWO, DONE_ONE] })
+    view.rerender({ groupBy: 'team', pagedIssues: ALL_ISSUES, activeView: MY_ISSUES })
+    view.rerender({ groupBy: 'status', pagedIssues: ALL_ISSUES, activeView: MY_ISSUES })
 
     expect(collapsedKeys(view.result.current.linearIssueListRows)).toEqual([])
     expect(issueIdentifiers(view.result.current.linearIssueListRows)).toEqual([
@@ -161,11 +201,48 @@ describe('useTaskPageLinearListPresentation collapse', () => {
     })
     view.rerender({
       groupBy: 'status',
-      pagedIssues: [TODO_ONE, TODO_TWO, issue('COR-4', 'Todo'), DONE_ONE]
+      pagedIssues: [TODO_ONE, TODO_TWO, issue('COR-4', 'Todo'), DONE_ONE],
+      activeView: MY_ISSUES
     })
 
     expect(collapsedKeys(view.result.current.linearIssueListRows)).toEqual(['status:Todo'])
     expect(issueIdentifiers(view.result.current.linearIssueListRows)).toEqual(['COR-3'])
+  })
+
+  it('clears collapsed sections when the active Linear view changes', () => {
+    const view = renderGroupedList()
+
+    act(() => {
+      view.result.current.toggleLinearSection('status:Todo')
+    })
+    // Same grouping, so the section keys are identical — only the view differs.
+    view.rerender({
+      groupBy: 'status',
+      pagedIssues: ALL_ISSUES,
+      activeView: { kind: 'project', id: 'project-1' }
+    })
+
+    expect(collapsedKeys(view.result.current.linearIssueListRows)).toEqual([])
+    expect(issueIdentifiers(view.result.current.linearIssueListRows)).toEqual([
+      'COR-1',
+      'COR-2',
+      'COR-3'
+    ])
+  })
+
+  it('does not carry a collapse between two projects', () => {
+    const view = renderGroupedList('status', ALL_ISSUES, { kind: 'project', id: 'project-1' })
+
+    act(() => {
+      view.result.current.toggleLinearSection('status:Todo')
+    })
+    view.rerender({
+      groupBy: 'status',
+      pagedIssues: ALL_ISSUES,
+      activeView: { kind: 'project', id: 'project-2' }
+    })
+
+    expect(collapsedKeys(view.result.current.linearIssueListRows)).toEqual([])
   })
 
   it('renders no section rows and ignores a toggle when grouping is none', () => {

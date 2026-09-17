@@ -8,11 +8,15 @@ export function useTaskPageLinearListPresentation(model: TaskPageLinearListProje
   const {
     linearDisplayProperties,
     linearGroupBy,
+    linearMode,
     linearOrderBy,
+    linearProjectTab,
     linearTeamOptions,
     linearTeamPropertyTouched,
     linearTeamSelection,
-    pagedLinearIssues
+    pagedLinearIssues,
+    selectedLinearCustomView,
+    selectedLinearProject
   } = model
   const selectedLinearTeamForExternalLink = useMemo(() => {
     if (linearTeamSelection.size !== 1) {
@@ -59,10 +63,26 @@ export function useTaskPageLinearListPresentation(model: TaskPageLinearListProje
   const [collapsedLinearSectionKeys, setCollapsedLinearSectionKeys] = useState<Set<string>>(
     () => new Set()
   )
-  // Section keys are grouping-specific, so a stale collapse would hide an unrelated section.
+  // Section keys repeat across Linear views and groupings, so a carried-over collapse folds a section the user never touched here.
+  const linearSectionScopeKey = useMemo(() => {
+    if (selectedLinearProject && linearProjectTab === 'issues') {
+      return `project:${selectedLinearProject.id}:${linearGroupBy}`
+    }
+    if (selectedLinearCustomView?.model === 'issue') {
+      return `view:${selectedLinearCustomView.id}:${linearGroupBy}`
+    }
+    return `list:${linearMode}:${linearGroupBy}`
+  }, [
+    linearGroupBy,
+    linearMode,
+    linearProjectTab,
+    selectedLinearCustomView?.id,
+    selectedLinearCustomView?.model,
+    selectedLinearProject
+  ])
   useEffect(() => {
     setCollapsedLinearSectionKeys((current) => (current.size === 0 ? current : new Set()))
-  }, [linearGroupBy])
+  }, [linearSectionScopeKey])
   const toggleLinearSection = useCallback((key: string) => {
     setCollapsedLinearSectionKeys((current) => {
       const next = new Set(current)
