@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import type { RepoIcon } from '../../../src/shared/repo-icon'
 import { salvagedOptional, salvagingArray } from '../../../src/shared/zod-salvage'
 
 // Node's own platform domain, not Orca's: `host.platform` answers `process.platform` verbatim, so
@@ -34,6 +35,11 @@ const NODE_PLATFORMS = [
  * same swatch. `repoIcon` is declared as the three arms MobileRepoIcon renders, and an arm this
  * build has not heard of degrades to absent — which is the Folder default that component already
  * drew for an arm it could not match, so the row keeps its label either way.
+ * The image arm deliberately stops at `src` and `label`: those are the members the component reads,
+ * and `source` — which it never reads — is left to pass through. Declaring it as the four arms
+ * `RepoIconImageSource` spells today would have dropped the WHOLE icon for a source a later host
+ * adds, drawing a Folder where main drew the image; passthrough keeps the member on the object
+ * verbatim, which is also what `settings-repo-metadata-icons` records.
  * `connectionId` and `executionHostId` are declared as plain strings rather than as
  * the host-id template union they are typed with: the union is a wire surface, and
  * `getRepoExecutionHostId` — which is what every read of them goes through — already answers `local`
@@ -54,7 +60,6 @@ export const hostRepoCatalogSchema = z
             z.looseObject({
               type: z.literal('image'),
               src: z.string(),
-              source: z.enum(['upload', 'file', 'favicon', 'github']),
               label: salvagedOptional('label', z.string())
             })
           ])
@@ -152,3 +157,11 @@ export const hostViewSettingsSchema = z
  * unhandled rejection where main showed no toast.
  */
 export const hostScreenUnreadReplySchema = z.unknown()
+
+/** One decoded catalog icon: the members MobileRepoIcon reads, with the rest passed through. */
+export type MobileHostRepoIcon = NonNullable<
+  z.output<typeof hostRepoCatalogSchema>[number]['repoIcon']
+>
+
+/** What MobileRepoIcon renders: a decoded catalog icon, or the `RepoIcon` a worktree row carries. */
+export type MobileRenderableRepoIcon = MobileHostRepoIcon | RepoIcon

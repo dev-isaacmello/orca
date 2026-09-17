@@ -36,6 +36,31 @@ describe('host screen reply schemas', () => {
     expect(unknown[0]?.repoIcon).toBeUndefined()
   })
 
+  it('keeps an image icon whose source this build has never heard of', () => {
+    const [repo] = hostRepoCatalogSchema.parse({
+      repos: [
+        {
+          id: 'r',
+          displayName: 'o',
+          repoIcon: {
+            type: 'image',
+            src: 'https://example.invalid/a.png',
+            source: 'gitlab',
+            label: 'acme/orca'
+          }
+        }
+      ]
+    })
+    // MobileRepoIcon reads src and label and never source, so narrowing source would have drawn a
+    // Folder where main drew the image. The member itself still reaches the row.
+    expect(repo?.repoIcon).toEqual({
+      type: 'image',
+      src: 'https://example.invalid/a.png',
+      source: 'gitlab',
+      label: 'acme/orca'
+    })
+  })
+
   it('passes a host-id spelling through for getRepoExecutionHostId to judge', () => {
     const [repo] = hostRepoCatalogSchema.parse({
       repos: [{ id: 'r', displayName: 'o', executionHostId: 'cloud:zone-a', connectionId: null }]

@@ -10,8 +10,8 @@ import type { OperationMutation } from '../operation-module-loader'
  *
  * Nothing on the recording path imports this file, which `mutant-seam.test.ts` holds.
  *
- * Two of the three survived their first run, and both survivals were defects in the gates rather
- * than in the readers:
+ * Two of the first three survived their first run, and both survivals were defects in the gates
+ * rather than in the readers:
  *
  *  - `file-tab-text-content-optional` survived because the unit pin dropped one required member at
  *    a time only in prose: it asserted `{ content, truncated }` and `{ content, byteLength }` were
@@ -66,6 +66,23 @@ export const REPLY_SCHEMA_MUTATIONS = {
     file: 'mobile-file-mutation-ownership.ts',
     before: '  return buildMobileFileMutationOwnership(summary.hostId, sshState)',
     after: '  return buildMobileFileMutationOwnership(summary.hostId ?? undefined, sshState)'
+  },
+  /**
+   * (d) Puts the closed image-source enum back on the repo icon — the one arm set on this branch
+   * that was narrower than what the wire can carry. No mobile consumer reads `source`, so the
+   * enum's only effect is that an icon whose source a later host adds fails the union arm, drops
+   * whole, and draws the Folder default where main drew the image.
+   *
+   * Killed by `src/host-screen/host-screen-reply-schema.test.ts` — "keeps an image icon whose
+   * source this build has never heard of". No golden kills it, and that is the point: this is the
+   * member `settings-repo-metadata-icons` was recorded for, and a fixture can only carry a source
+   * that exists today, so the future-arm case stays a unit property.
+   */
+  'repo-icon-source-closed': {
+    file: 'host-screen-reply-schema.ts',
+    before: '              src: z.string(),',
+    after:
+      "              src: z.string(),\n              source: z.enum(['upload', 'file', 'favicon', 'github']),"
   }
 } as const satisfies Record<string, Omit<OperationMutation, 'name'>>
 
