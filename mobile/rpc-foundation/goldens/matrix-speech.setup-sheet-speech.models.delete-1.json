@@ -3,8 +3,8 @@
   "family": "speech.setup-sheet",
   "namedDeltas": [],
   "runnerVersion": 1,
-  "baseline": "4b876758d3158a8eb6b798055d8db7c58d1cd4a9",
-  "lockfileSha256": "788c1234b38a61fc882fca292341fce6690deee9cc6695673b0575cf2c4cf571",
+  "baseline": "c86fe077b2bb219a4854177c085ec0ebde999c2c",
+  "lockfileSha256": "4568633356187895ccda8e2ff83245c37d5621832c69e268733733b6947971e3",
   "recorderSha256": "d4fa125899cd863c03dbf96657d46b8c7d6c0ccf522b342bc4f164ed1e3becfe",
   "adapterSha256": "3ddb44511547ae2fc97340e5a49393233f6716f9704b7b994f43bc030788b25b",
   "scenarioSha256": "140ede79a9ee0c02bedbfe67551060ef85692b6cb71968a48a1c41fcb4863804",
@@ -13,92 +13,10 @@
   "projectionVersion": 2,
   "goldenFormatVersion": 5,
   "values": {
-    "0629aa17065f": {
-      "configure": {
-        "enabled": true,
-        "models": [
-          {
-            "id": "whisper-small",
-            "name": "Small",
-            "status": "ready"
-          }
-        ],
-        "selectedModelId": "whisper-small"
-      },
-      "delete": {
-        "error": {
-          "message": "inner refused"
-        },
-        "ok": false
-      },
-      "download": "started",
-      "list": {
-        "enabled": true,
-        "models": [
-          {
-            "id": "whisper-small",
-            "name": "Small",
-            "status": "ready"
-          }
-        ],
-        "selectedModelId": "whisper-small"
-      }
-    },
     "0e61f11d0307": {
       "name": "speech.models.delete#1",
       "ordinal": 6,
       "json": "{\"id\":\"frame-3\",\"deviceToken\":\"recording-device\",\"method\":\"speech.models.delete\",\"params\":{\"modelId\":\"whisper-small\"}}"
-    },
-    "1117d44df3f8": {
-      "configure": {
-        "enabled": true,
-        "models": [
-          {
-            "id": "whisper-small",
-            "name": "Small",
-            "status": "ready"
-          }
-        ],
-        "selectedModelId": "whisper-small"
-      },
-      "delete": "started",
-      "download": "started",
-      "list": {
-        "enabled": true,
-        "models": [
-          {
-            "id": "whisper-small",
-            "name": "Small",
-            "status": "ready"
-          }
-        ],
-        "selectedModelId": "whisper-small"
-      }
-    },
-    "1f67869c3be1": {
-      "configure": {
-        "enabled": true,
-        "models": [
-          {
-            "id": "whisper-small",
-            "name": "Small",
-            "status": "ready"
-          }
-        ],
-        "selectedModelId": "whisper-small"
-      },
-      "download": "started",
-      "list": {
-        "enabled": true,
-        "models": [
-          {
-            "id": "whisper-small",
-            "name": "Small",
-            "status": "ready"
-          }
-        ],
-        "selectedModelId": "whisper-small"
-      }
     },
     "2b94c4c320cf": {
       "name": "speech.models.delete#1",
@@ -137,12 +55,14 @@
         }
       }
     },
-    "301151228fa3": {
-      "status": "fulfilled",
+    "2d0263e221bc": {
+      "status": "rejected",
       "startedAt": 0,
       "settledAt": 0,
-      "value": {
-        "error": "refused"
+      "error": {
+        "category": "Error",
+        "message": "The host sent a reply this app could not read (speech.dictation.setup)",
+        "isRpcDeliveryUnknown": false
       }
     },
     "32a7c0ae7918": {
@@ -264,32 +184,14 @@
         }
       }
     },
-    "3eac8959f5ab": {
-      "configure": {
-        "enabled": true,
-        "models": [
-          {
-            "id": "whisper-small",
-            "name": "Small",
-            "status": "ready"
-          }
-        ],
-        "selectedModelId": "whisper-small"
-      },
-      "delete": {
-        "$rpc": "null"
-      },
-      "download": "started",
-      "list": {
-        "enabled": true,
-        "models": [
-          {
-            "id": "whisper-small",
-            "name": "Small",
-            "status": "ready"
-          }
-        ],
-        "selectedModelId": "whisper-small"
+    "44b46aebf7db": {
+      "status": "rejected",
+      "startedAt": 0,
+      "settledAt": 0,
+      "error": {
+        "category": "Error",
+        "message": "The host sent a reply this app could not read (speech.models.list)",
+        "isRpcDeliveryUnknown": false
       }
     },
     "47237ace2093": {
@@ -444,60 +346,8 @@
         }
       }
     },
-    "7c5b27891a8f": {
-      "configure": {
-        "enabled": true,
-        "models": [
-          {
-            "id": "whisper-small",
-            "name": "Small",
-            "status": "ready"
-          }
-        ],
-        "selectedModelId": "whisper-small"
-      },
-      "delete": {
-        "enabled": true,
-        "models": [],
-        "selectedModelId": "whisper-small"
-      },
-      "download": "started",
-      "list": {
-        "enabled": true,
-        "models": [
-          {
-            "id": "whisper-small",
-            "name": "Small",
-            "status": "ready"
-          }
-        ],
-        "selectedModelId": "whisper-small"
-      }
-    },
-    "9f00dd54ba64": {
-      "status": "fulfilled",
-      "startedAt": 0,
-      "settledAt": 0,
-      "value": {
-        "error": "inner refused",
-        "ok": false
-      }
-    },
-    "a2879fd6371d": {
-      "status": "fulfilled",
-      "startedAt": 0,
-      "settledAt": 0,
-      "value": {
-        "enabled": true,
-        "models": [
-          {
-            "id": "whisper-small",
-            "name": "Small",
-            "status": "ready"
-          }
-        ],
-        "selectedModelId": "whisper-small"
-      }
+    "8b166566e66f": {
+      "download": "started"
     },
     "a947768bc0ed": {
       "status": "rejected",
@@ -517,17 +367,6 @@
         "category": "Error",
         "message": "Failed to delete model",
         "isRpcDeliveryUnknown": false
-      }
-    },
-    "ad8a954e879d": {
-      "status": "fulfilled",
-      "startedAt": 0,
-      "settledAt": 0,
-      "value": {
-        "error": {
-          "message": "inner refused"
-        },
-        "ok": false
       }
     },
     "adbb96fcc08c": {
@@ -619,34 +458,6 @@
         }
       }
     },
-    "d32fe9752c54": {
-      "configure": {
-        "enabled": true,
-        "models": [
-          {
-            "id": "whisper-small",
-            "name": "Small",
-            "status": "ready"
-          }
-        ],
-        "selectedModelId": "whisper-small"
-      },
-      "delete": {
-        "error": "refused"
-      },
-      "download": "started",
-      "list": {
-        "enabled": true,
-        "models": [
-          {
-            "id": "whisper-small",
-            "name": "Small",
-            "status": "ready"
-          }
-        ],
-        "selectedModelId": "whisper-small"
-      }
-    },
     "d8c329a93e43": {
       "name": "speech.models.delete#1",
       "ordinal": 5,
@@ -718,35 +529,6 @@
         }
       }
     },
-    "e2401fd120ea": {
-      "configure": {
-        "enabled": true,
-        "models": [
-          {
-            "id": "whisper-small",
-            "name": "Small",
-            "status": "ready"
-          }
-        ],
-        "selectedModelId": "whisper-small"
-      },
-      "delete": {
-        "error": "inner refused",
-        "ok": false
-      },
-      "download": "started",
-      "list": {
-        "enabled": true,
-        "models": [
-          {
-            "id": "whisper-small",
-            "name": "Small",
-            "status": "ready"
-          }
-        ],
-        "selectedModelId": "whisper-small"
-      }
-    },
     "e35a372455e8": {
       "name": "speech.models.delete#1",
       "ordinal": 5,
@@ -780,6 +562,16 @@
             "ok": false
           }
         }
+      }
+    },
+    "e5305075c4c9": {
+      "status": "rejected",
+      "startedAt": 0,
+      "settledAt": 0,
+      "error": {
+        "category": "Error",
+        "message": "The host sent a reply this app could not read (speech.models.delete)",
+        "isRpcDeliveryUnknown": false
       }
     },
     "eb5c8d14744b": {
@@ -822,28 +614,10 @@
         "$rpc": "undefined"
       }
     },
-    "ee20a1dc39e7": {
-      "status": "fulfilled",
-      "startedAt": 0,
-      "settledAt": 0,
-      "value": {
-        "$rpc": "null"
-      }
-    },
     "fba26d61d9d2": {
       "name": "speech.dictation.setup#1",
       "ordinal": 8,
       "json": "{\"id\":\"frame-4\",\"deviceToken\":\"recording-device\",\"method\":\"speech.dictation.setup\",\"params\":{\"enabled\":true,\"modelId\":\"whisper-small\"}}"
-    },
-    "fc5fb77f49bb": {
-      "status": "fulfilled",
-      "startedAt": 0,
-      "settledAt": 0,
-      "value": {
-        "enabled": true,
-        "models": [],
-        "selectedModelId": "whisper-small"
-      }
     }
   },
   "recording": {
@@ -855,12 +629,12 @@
           "sender": ["6c40f11805ec", "adbb96fcc08c", "d8c329a93e43", "38ccf3e1658f"],
           "payloads": ["4f793e38be31", "694b34cbeee9", "0e61f11d0307", "fba26d61d9d2"],
           "settlements": {
-            "list": "a2879fd6371d",
+            "list": "44b46aebf7db",
             "download": "eb79a9b3682a",
-            "delete": "fc5fb77f49bb",
-            "configure": "a2879fd6371d"
+            "delete": "e5305075c4c9",
+            "configure": "2d0263e221bc"
           },
-          "state": "7c5b27891a8f",
+          "state": "8b166566e66f",
           "effects": []
         }
       },
@@ -870,12 +644,12 @@
           "sender": ["6c40f11805ec", "adbb96fcc08c", "47237ace2093", "38ccf3e1658f"],
           "payloads": ["4f793e38be31", "694b34cbeee9", "0e61f11d0307", "fba26d61d9d2"],
           "settlements": {
-            "list": "a2879fd6371d",
+            "list": "44b46aebf7db",
             "download": "eb79a9b3682a",
-            "delete": "eb79a9b3682a",
-            "configure": "a2879fd6371d"
+            "delete": "e5305075c4c9",
+            "configure": "2d0263e221bc"
           },
-          "state": "1117d44df3f8",
+          "state": "8b166566e66f",
           "effects": []
         }
       },
@@ -885,12 +659,12 @@
           "sender": ["6c40f11805ec", "adbb96fcc08c", "4a42b782b6b6", "38ccf3e1658f"],
           "payloads": ["4f793e38be31", "694b34cbeee9", "0e61f11d0307", "fba26d61d9d2"],
           "settlements": {
-            "list": "a2879fd6371d",
+            "list": "44b46aebf7db",
             "download": "eb79a9b3682a",
-            "delete": "ee20a1dc39e7",
-            "configure": "a2879fd6371d"
+            "delete": "e5305075c4c9",
+            "configure": "2d0263e221bc"
           },
-          "state": "3eac8959f5ab",
+          "state": "8b166566e66f",
           "effects": []
         }
       },
@@ -900,12 +674,12 @@
           "sender": ["6c40f11805ec", "adbb96fcc08c", "3368590a2704", "38ccf3e1658f"],
           "payloads": ["4f793e38be31", "694b34cbeee9", "0e61f11d0307", "fba26d61d9d2"],
           "settlements": {
-            "list": "a2879fd6371d",
+            "list": "44b46aebf7db",
             "download": "eb79a9b3682a",
-            "delete": "301151228fa3",
-            "configure": "a2879fd6371d"
+            "delete": "e5305075c4c9",
+            "configure": "2d0263e221bc"
           },
-          "state": "d32fe9752c54",
+          "state": "8b166566e66f",
           "effects": []
         }
       },
@@ -915,12 +689,12 @@
           "sender": ["6c40f11805ec", "adbb96fcc08c", "e35a372455e8", "38ccf3e1658f"],
           "payloads": ["4f793e38be31", "694b34cbeee9", "0e61f11d0307", "fba26d61d9d2"],
           "settlements": {
-            "list": "a2879fd6371d",
+            "list": "44b46aebf7db",
             "download": "eb79a9b3682a",
-            "delete": "9f00dd54ba64",
-            "configure": "a2879fd6371d"
+            "delete": "e5305075c4c9",
+            "configure": "2d0263e221bc"
           },
-          "state": "e2401fd120ea",
+          "state": "8b166566e66f",
           "effects": []
         }
       },
@@ -930,12 +704,12 @@
           "sender": ["6c40f11805ec", "adbb96fcc08c", "2b94c4c320cf", "38ccf3e1658f"],
           "payloads": ["4f793e38be31", "694b34cbeee9", "0e61f11d0307", "fba26d61d9d2"],
           "settlements": {
-            "list": "a2879fd6371d",
+            "list": "44b46aebf7db",
             "download": "eb79a9b3682a",
-            "delete": "ad8a954e879d",
-            "configure": "a2879fd6371d"
+            "delete": "e5305075c4c9",
+            "configure": "2d0263e221bc"
           },
-          "state": "0629aa17065f",
+          "state": "8b166566e66f",
           "effects": []
         }
       },
@@ -945,12 +719,12 @@
           "sender": ["6c40f11805ec", "adbb96fcc08c", "7b3eb54c8f03", "38ccf3e1658f"],
           "payloads": ["4f793e38be31", "694b34cbeee9", "0e61f11d0307", "fba26d61d9d2"],
           "settlements": {
-            "list": "a2879fd6371d",
+            "list": "44b46aebf7db",
             "download": "eb79a9b3682a",
             "delete": "32a7c0ae7918",
-            "configure": "a2879fd6371d"
+            "configure": "2d0263e221bc"
           },
-          "state": "1f67869c3be1",
+          "state": "8b166566e66f",
           "effects": []
         }
       },
@@ -960,12 +734,12 @@
           "sender": ["6c40f11805ec", "adbb96fcc08c", "de657d1b637a", "38ccf3e1658f"],
           "payloads": ["4f793e38be31", "694b34cbeee9", "0e61f11d0307", "fba26d61d9d2"],
           "settlements": {
-            "list": "a2879fd6371d",
+            "list": "44b46aebf7db",
             "download": "eb79a9b3682a",
             "delete": "aa1c9059345a",
-            "configure": "a2879fd6371d"
+            "configure": "2d0263e221bc"
           },
-          "state": "1f67869c3be1",
+          "state": "8b166566e66f",
           "effects": []
         }
       },
@@ -975,12 +749,12 @@
           "sender": ["6c40f11805ec", "adbb96fcc08c", "d0d958e4a5e3", "38ccf3e1658f"],
           "payloads": ["4f793e38be31", "694b34cbeee9", "0e61f11d0307", "fba26d61d9d2"],
           "settlements": {
-            "list": "a2879fd6371d",
+            "list": "44b46aebf7db",
             "download": "eb79a9b3682a",
             "delete": "b948e8307e81",
-            "configure": "a2879fd6371d"
+            "configure": "2d0263e221bc"
           },
-          "state": "1f67869c3be1",
+          "state": "8b166566e66f",
           "effects": []
         }
       },
@@ -990,12 +764,12 @@
           "sender": ["6c40f11805ec", "adbb96fcc08c", "eb5c8d14744b", "38ccf3e1658f"],
           "payloads": ["4f793e38be31", "694b34cbeee9", "0e61f11d0307", "fba26d61d9d2"],
           "settlements": {
-            "list": "a2879fd6371d",
+            "list": "44b46aebf7db",
             "download": "eb79a9b3682a",
             "delete": "a947768bc0ed",
-            "configure": "a2879fd6371d"
+            "configure": "2d0263e221bc"
           },
-          "state": "1f67869c3be1",
+          "state": "8b166566e66f",
           "effects": []
         }
       },
@@ -1005,12 +779,12 @@
           "sender": ["6c40f11805ec", "adbb96fcc08c", "3da47c6c3b87", "38ccf3e1658f"],
           "payloads": ["4f793e38be31", "694b34cbeee9", "0e61f11d0307", "fba26d61d9d2"],
           "settlements": {
-            "list": "a2879fd6371d",
+            "list": "44b46aebf7db",
             "download": "eb79a9b3682a",
             "delete": "c7584e82c72f",
-            "configure": "a2879fd6371d"
+            "configure": "2d0263e221bc"
           },
-          "state": "1f67869c3be1",
+          "state": "8b166566e66f",
           "effects": []
         }
       }

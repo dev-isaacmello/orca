@@ -3,8 +3,8 @@
   "family": "files.preview-worktree-text",
   "namedDeltas": [],
   "runnerVersion": 1,
-  "baseline": "4b876758d3158a8eb6b798055d8db7c58d1cd4a9",
-  "lockfileSha256": "788c1234b38a61fc882fca292341fce6690deee9cc6695673b0575cf2c4cf571",
+  "baseline": "c86fe077b2bb219a4854177c085ec0ebde999c2c",
+  "lockfileSha256": "4568633356187895ccda8e2ff83245c37d5621832c69e268733733b6947971e3",
   "recorderSha256": "d4fa125899cd863c03dbf96657d46b8c7d6c0ccf522b342bc4f164ed1e3becfe",
   "adapterSha256": "b93fc8b6f1ece041acaa8cc5699852085e67d7e2f39db13145e483f854ea3309",
   "scenarioSha256": "08d73805619f00748caa5726a7fb0d9b9c561f93ec1e6dd28b27065a4515d65d",
@@ -465,6 +465,17 @@
           }
         }
       }
+    },
+    "fed544a8befe": {
+      "status": "rejected",
+      "startedAt": 0,
+      "settledAt": 0,
+      "error": {
+        "category": "RpcIncompatibleReplyError",
+        "message": "The host sent a reply this app could not read (files.read)",
+        "isRpcDeliveryUnknown": false,
+        "code": "incompatible_reply"
+      }
     }
   },
   "recording": {
@@ -488,9 +499,9 @@
           "sender": ["43e3786742e9"],
           "payloads": ["8423ff93fda2"],
           "settlements": {
-            "load": "15467bba2d60"
+            "load": "fed544a8befe"
           },
-          "state": "fba5e3c89244",
+          "state": "645c5754be42",
           "effects": []
         }
       },
@@ -500,9 +511,9 @@
           "sender": ["10dde7cd8f0e"],
           "payloads": ["8423ff93fda2"],
           "settlements": {
-            "load": "15467bba2d60"
+            "load": "fed544a8befe"
           },
-          "state": "fba5e3c89244",
+          "state": "645c5754be42",
           "effects": []
         }
       },
@@ -512,9 +523,9 @@
           "sender": ["fcbcdb353528"],
           "payloads": ["8423ff93fda2"],
           "settlements": {
-            "load": "15467bba2d60"
+            "load": "fed544a8befe"
           },
-          "state": "fba5e3c89244",
+          "state": "645c5754be42",
           "effects": []
         }
       },
@@ -524,9 +535,9 @@
           "sender": ["d7d97e5dac06"],
           "payloads": ["8423ff93fda2"],
           "settlements": {
-            "load": "15467bba2d60"
+            "load": "fed544a8befe"
           },
-          "state": "fba5e3c89244",
+          "state": "645c5754be42",
           "effects": []
         }
       },
@@ -536,9 +547,9 @@
           "sender": ["072647254b82"],
           "payloads": ["8423ff93fda2"],
           "settlements": {
-            "load": "15467bba2d60"
+            "load": "fed544a8befe"
           },
-          "state": "fba5e3c89244",
+          "state": "645c5754be42",
           "effects": []
         }
       },
