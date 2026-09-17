@@ -4,6 +4,8 @@ import { getLinearIssueGridTemplate, groupLinearIssues } from './task-page-linea
 import type { LinearIssueListRow } from './task-page-linear-issue-model'
 import type { TaskPageLinearListProjectionPreludeModel } from './use-task-page-linear-list-projection'
 
+const NO_COLLAPSED_SECTIONS: ReadonlySet<string> = new Set()
+
 export function useTaskPageLinearListPresentation(model: TaskPageLinearListProjectionPreludeModel) {
   const {
     linearDisplayProperties,
@@ -60,9 +62,6 @@ export function useTaskPageLinearListPresentation(model: TaskPageLinearListProje
     () => groupLinearIssues(pagedLinearIssues, linearGroupBy, linearOrderBy),
     [pagedLinearIssues, linearGroupBy, linearOrderBy]
   )
-  const [collapsedLinearSectionKeys, setCollapsedLinearSectionKeys] = useState<Set<string>>(
-    () => new Set()
-  )
   // Section keys repeat across Linear views and groupings, so a carried-over collapse folds a section the user never touched here.
   const linearSectionScopeKey = useMemo(() => {
     if (selectedLinearProject && linearProjectTab === 'issues') {
@@ -80,18 +79,37 @@ export function useTaskPageLinearListPresentation(model: TaskPageLinearListProje
     selectedLinearCustomView?.model,
     selectedLinearProject
   ])
+  const [collapsedLinearSections, setCollapsedLinearSections] = useState<{
+    scopeKey: string
+    keys: ReadonlySet<string>
+  }>(() => ({ scopeKey: linearSectionScopeKey, keys: NO_COLLAPSED_SECTIONS }))
+  // Read through the scope so a set from the previous list is ignored on the first render of a new one, before the effect below has run.
+  const collapsedLinearSectionKeys =
+    collapsedLinearSections.scopeKey === linearSectionScopeKey
+      ? collapsedLinearSections.keys
+      : NO_COLLAPSED_SECTIONS
+  // Drop it once the scope has changed, so returning to a list always starts expanded rather than restoring a fold the user cannot see they left behind.
   useEffect(() => {
-    setCollapsedLinearSectionKeys((current) => (current.size === 0 ? current : new Set()))
+    setCollapsedLinearSections((current) =>
+      current.scopeKey === linearSectionScopeKey
+        ? current
+        : { scopeKey: linearSectionScopeKey, keys: NO_COLLAPSED_SECTIONS }
+    )
   }, [linearSectionScopeKey])
-  const toggleLinearSection = useCallback((key: string) => {
-    setCollapsedLinearSectionKeys((current) => {
-      const next = new Set(current)
-      if (!next.delete(key)) {
-        next.add(key)
-      }
-      return next
-    })
-  }, [])
+  const toggleLinearSection = useCallback(
+    (key: string) => {
+      setCollapsedLinearSections((current) => {
+        const keys = new Set(
+          current.scopeKey === linearSectionScopeKey ? current.keys : NO_COLLAPSED_SECTIONS
+        )
+        if (!keys.delete(key)) {
+          keys.add(key)
+        }
+        return { scopeKey: linearSectionScopeKey, keys }
+      })
+    },
+    [linearSectionScopeKey]
+  )
   const linearIssueListRows = useMemo<LinearIssueListRow[]>(
     () =>
       linearIssueSections.flatMap((section) => {

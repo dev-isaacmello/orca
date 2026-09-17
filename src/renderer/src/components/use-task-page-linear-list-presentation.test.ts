@@ -230,6 +230,33 @@ describe('useTaskPageLinearListPresentation collapse', () => {
     ])
   })
 
+  it('never paints a stale collapse on the first render of a new view', () => {
+    const rendered: LinearIssueListRow[][] = []
+    const initialProps: { activeView: LinearView } = { activeView: MY_ISSUES }
+    const view = renderHook(
+      ({ activeView }: { activeView: LinearView }) => {
+        const model = useTaskPageLinearListPresentation(
+          preludeModel('status', ALL_ISSUES, activeView)
+        )
+        rendered.push(model.linearIssueListRows)
+        return model
+      },
+      { initialProps }
+    )
+
+    act(() => {
+      view.result.current.toggleLinearSection('status:Todo')
+    })
+    const beforeSwitch = rendered.length
+    view.rerender({ activeView: { kind: 'project', id: 'project-1' } })
+
+    // A reset that only runs in an effect leaves the first render of the new
+    // view holding the old set, so the section flashes collapsed before it opens.
+    for (const rows of rendered.slice(beforeSwitch)) {
+      expect(issueIdentifiers(rows)).toEqual(['COR-1', 'COR-2', 'COR-3'])
+    }
+  })
+
   it('does not carry a collapse between two projects', () => {
     const view = renderGroupedList('status', ALL_ISSUES, { kind: 'project', id: 'project-1' })
 
