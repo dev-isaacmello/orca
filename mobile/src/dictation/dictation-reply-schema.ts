@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { openEnum, salvagedOptional, salvagingArray } from '../../../src/shared/zod-salvage'
+import { salvagedOptional, salvagingArray } from '../../../src/shared/zod-salvage'
 
 // The dictation setup sheet's reads and writes, and the three sends one dictation session makes.
 // Checked against src/main/runtime/rpc/methods/speech.ts:12-59 and the shared results the speech
@@ -14,7 +14,6 @@ const SPEECH_MODEL_STATUSES = [
   'extracting',
   'error'
 ] as const
-const DICTATION_MODES = ['toggle', 'hold'] as const
 
 /**
  * One model row in the setup sheet.
@@ -51,12 +50,12 @@ const speechModelSchema = z.looseObject({
  * `models` is required: MobileDictationSetupSheet.tsx:49 and VoiceModelList.tsx:53 read `.some` and
  * `.map` on it with no guard, so a reply without one was a TypeError inside the sheet's own refresh.
  *
- * `dictationMode` is salvaged like the rest, and its arm set is open: an arm this build has not
- * heard of degrades to `toggle`, the value the screen's own `useState<'toggle' | 'hold'>` starts at,
- * rather than to one that matches no segment. It is NOT required even though the host declares it
- * so — main rendered a sheet without one, and requiring a member no consumer crashes on is the
- * version claim Rule 1 of the remote-wire contract warns about. The native-chat reader supplies the
- * same `toggle` for an absent mode that its state already held.
+ * `dictationMode` is forwarded as the string the host sent, not as an arm set. Every consumer is an
+ * equality test against `toggle` or `hold` — the voice-settings segments, the terminal input mic and
+ * the native-chat composer — so a mode this build has not heard of renders the same inert control
+ * whether it arrives verbatim or as a substitute, and forwarding is the one that makes no version
+ * claim. It is NOT required even though the host declares it so: main rendered a sheet without one,
+ * and an absent mode stays absent here so the mic it feeds is as inert as main's was.
  *
  * `enabled` and `selectedModelId` stay salvaged: both are read behind `!`/`===` and a reply missing
  * either renders an off switch and no selected row, which is what main rendered for the same reply.
@@ -64,7 +63,7 @@ const speechModelSchema = z.looseObject({
 export const dictationSetupSchema = z.looseObject({
   enabled: salvagedOptional('enabled', z.boolean()),
   selectedModelId: salvagedOptional('selectedModelId', z.string()),
-  dictationMode: salvagedOptional('dictationMode', openEnum(DICTATION_MODES, 'toggle')),
+  dictationMode: salvagedOptional('dictationMode', z.string()),
   models: salvagingArray(speechModelSchema)
 })
 

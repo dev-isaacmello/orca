@@ -16,9 +16,9 @@ describe('dictation setup reply schema', () => {
     expect(dictationSetupSchema.safeParse(setup({ models: 'none' })).success).toBe(false)
   })
 
-  it('degrades an unknown dictation mode to the default the screen already starts in', () => {
+  it('forwards a dictation mode this build has never heard of instead of substituting one', () => {
     expect(dictationSetupSchema.parse(setup({ dictationMode: 'push-to-talk' })).dictationMode).toBe(
-      'toggle'
+      'push-to-talk'
     )
     expect(dictationSetupSchema.parse(setup({ dictationMode: 'hold' })).dictationMode).toBe('hold')
   })

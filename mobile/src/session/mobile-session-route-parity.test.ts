@@ -76,9 +76,9 @@ const HEAD_CALLBACK_IDENTITY_SHA256 =
 // on the merge, for the display-mode toggle whose send became `terminalDisplayModeSet`. Refreshed
 // for the files domain's step 7, which retired the markdown disk fallback's `{ content, truncated,
 // byteLength }` cast: the preview reader checks the content and salvages the flag, so `readMarkdownTab`
-// reads `fallback.value` directly, and the dictation-mode refresh names the `toggle` its own state
-// already started at, because the setup reader salvages a mode it cannot read to absent.
-const HEAD_CALLBACK_BODY_SHA256 = '772f23a1e12e6cfbb40a61843a8e17566abc28b87f665d3224c4349d2f22c835'
+// reads `fallback.value` directly. The dictation-mode refresh is main's own body again — it forwards
+// whatever mode the reply carried, so an absent one leaves the mic as inert as main left it.
+const HEAD_CALLBACK_BODY_SHA256 = 'ceba525103ccac47df766063d58593ba083d59785f86257d849e355669ed47ae'
 // Refreshed for the startup effect: both `worktree.activate` sends became `worktreeActivate`, and
 // the sleeping-agent check reads that operation's verdict instead of the reply envelope. Refreshed
 // again when the reporter took the reply and interpreted it itself, retiring the hand-built
@@ -103,10 +103,9 @@ const HEAD_TIMER_CLEANUP_SHA256 = 'c73f1d1c2cc89642f3d727d6f3b6b81860a9d6f342345
 // Six method literals fewer than before step 6: `terminal.send` and `terminal.clearBuffer` went
 // first, then `worktree.activate` twice, `session.tabs.createTerminal` and
 // `terminal.setDisplayMode`. Each is now fixed at its operation's definition instead of being
-// spelled at the call site. One literal back in step 7: the dictation-mode refresh names its own
-// `toggle` default, where main forwarded whatever the cast payload carried.
+// spelled at the call site.
 const HEAD_RUNTIME_STRING_SHA256 =
-  'e71127a614aef13f0467220caaa044147d803f6834f64866ff463c55a63ba6b2'
+  'a5496f14589916b027334a236630720b39eb0360d91538d212b408c1f61bb523'
 const HEAD_HOST_JSX_SHA256 = '390405926b1695fa3a33686f0bc192b432f5468d8576499d7cafbb4922defbb5'
 const HEAD_LEAF_JSX_SHA256 = '21dba981875e173f692590bf910d60964660c5f4cbb79f3a377c7e54f6a1f016'
 const HEAD_STYLE_REFERENCE_SHA256 =
@@ -544,9 +543,7 @@ describe('mobile session route extraction parity', () => {
 
   it('preserves runtime strings, styles, and the expanded JSX tree', () => {
     const strings = readRuntimeStrings()
-    // One more than before step 7's files domain: the dictation-mode refresh spells the `toggle`
-    // default that an absent mode always left the state at, now that the reader salvages it.
-    expect(strings).toHaveLength(532)
+    expect(strings).toHaveLength(531)
     expect(hash(strings)).toBe(HEAD_RUNTIME_STRING_SHA256)
     const jsx = readJsxFacts(readDefinitions())
     expect(jsx.host).toHaveLength(124)
