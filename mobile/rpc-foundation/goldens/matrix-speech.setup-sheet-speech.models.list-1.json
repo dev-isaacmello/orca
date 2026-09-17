@@ -3,7 +3,7 @@
   "family": "speech.setup-sheet",
   "namedDeltas": [],
   "runnerVersion": 1,
-  "baseline": "c86fe077b2bb219a4854177c085ec0ebde999c2c",
+  "baseline": "ae471cab5bf1bcf1d9e3dc6e9936804326757403",
   "lockfileSha256": "4568633356187895ccda8e2ff83245c37d5621832c69e268733733b6947971e3",
   "recorderSha256": "d4fa125899cd863c03dbf96657d46b8c7d6c0ccf522b342bc4f164ed1e3becfe",
   "adapterSha256": "3ddb44511547ae2fc97340e5a49393233f6716f9704b7b994f43bc030788b25b",
@@ -17,16 +17,6 @@
       "name": "speech.models.delete#1",
       "ordinal": 6,
       "json": "{\"id\":\"frame-3\",\"deviceToken\":\"recording-device\",\"method\":\"speech.models.delete\",\"params\":{\"modelId\":\"whisper-small\"}}"
-    },
-    "2d0263e221bc": {
-      "status": "rejected",
-      "startedAt": 0,
-      "settledAt": 0,
-      "error": {
-        "category": "Error",
-        "message": "The host sent a reply this app could not read (speech.dictation.setup)",
-        "isRpcDeliveryUnknown": false
-      }
     },
     "32a7c0ae7918": {
       "status": "rejected",
@@ -254,6 +244,36 @@
         }
       }
     },
+    "7c5b27891a8f": {
+      "configure": {
+        "enabled": true,
+        "models": [
+          {
+            "id": "whisper-small",
+            "name": "Small",
+            "status": "ready"
+          }
+        ],
+        "selectedModelId": "whisper-small"
+      },
+      "delete": {
+        "enabled": true,
+        "models": [],
+        "selectedModelId": "whisper-small"
+      },
+      "download": "started",
+      "list": {
+        "enabled": true,
+        "models": [
+          {
+            "id": "whisper-small",
+            "name": "Small",
+            "status": "ready"
+          }
+        ],
+        "selectedModelId": "whisper-small"
+      }
+    },
     "8a419aef0d30": {
       "name": "speech.models.list#1",
       "ordinal": 1,
@@ -289,7 +309,23 @@
         }
       }
     },
-    "8b166566e66f": {
+    "8c2c55317f83": {
+      "configure": {
+        "enabled": true,
+        "models": [
+          {
+            "id": "whisper-small",
+            "name": "Small",
+            "status": "ready"
+          }
+        ],
+        "selectedModelId": "whisper-small"
+      },
+      "delete": {
+        "enabled": true,
+        "models": [],
+        "selectedModelId": "whisper-small"
+      },
       "download": "started"
     },
     "94dfe144483b": {
@@ -358,6 +394,22 @@
           "id": "frame-1",
           "ok": true
         }
+      }
+    },
+    "a2879fd6371d": {
+      "status": "fulfilled",
+      "startedAt": 0,
+      "settledAt": 0,
+      "value": {
+        "enabled": true,
+        "models": [
+          {
+            "id": "whisper-small",
+            "name": "Small",
+            "status": "ready"
+          }
+        ],
+        "selectedModelId": "whisper-small"
       }
     },
     "a947768bc0ed": {
@@ -495,16 +547,6 @@
         }
       }
     },
-    "e5305075c4c9": {
-      "status": "rejected",
-      "startedAt": 0,
-      "settledAt": 0,
-      "error": {
-        "category": "Error",
-        "message": "The host sent a reply this app could not read (speech.models.delete)",
-        "isRpcDeliveryUnknown": false
-      }
-    },
     "e5806ea10852": {
       "name": "speech.models.list#1",
       "ordinal": 1,
@@ -585,6 +627,16 @@
       "ordinal": 8,
       "json": "{\"id\":\"frame-4\",\"deviceToken\":\"recording-device\",\"method\":\"speech.dictation.setup\",\"params\":{\"enabled\":true,\"modelId\":\"whisper-small\"}}"
     },
+    "fc5fb77f49bb": {
+      "status": "fulfilled",
+      "startedAt": 0,
+      "settledAt": 0,
+      "value": {
+        "enabled": true,
+        "models": [],
+        "selectedModelId": "whisper-small"
+      }
+    },
     "fcf4e2c83b5a": {
       "name": "speech.models.list#1",
       "ordinal": 1,
@@ -629,12 +681,12 @@
           "sender": ["6c40f11805ec", "adbb96fcc08c", "d8c329a93e43", "38ccf3e1658f"],
           "payloads": ["4f793e38be31", "694b34cbeee9", "0e61f11d0307", "fba26d61d9d2"],
           "settlements": {
-            "list": "44b46aebf7db",
+            "list": "a2879fd6371d",
             "download": "eb79a9b3682a",
-            "delete": "e5305075c4c9",
-            "configure": "2d0263e221bc"
+            "delete": "fc5fb77f49bb",
+            "configure": "a2879fd6371d"
           },
-          "state": "8b166566e66f",
+          "state": "7c5b27891a8f",
           "effects": []
         }
       },
@@ -646,10 +698,10 @@
           "settlements": {
             "list": "44b46aebf7db",
             "download": "eb79a9b3682a",
-            "delete": "e5305075c4c9",
-            "configure": "2d0263e221bc"
+            "delete": "fc5fb77f49bb",
+            "configure": "a2879fd6371d"
           },
-          "state": "8b166566e66f",
+          "state": "8c2c55317f83",
           "effects": []
         }
       },
@@ -661,10 +713,10 @@
           "settlements": {
             "list": "44b46aebf7db",
             "download": "eb79a9b3682a",
-            "delete": "e5305075c4c9",
-            "configure": "2d0263e221bc"
+            "delete": "fc5fb77f49bb",
+            "configure": "a2879fd6371d"
           },
-          "state": "8b166566e66f",
+          "state": "8c2c55317f83",
           "effects": []
         }
       },
@@ -676,10 +728,10 @@
           "settlements": {
             "list": "44b46aebf7db",
             "download": "eb79a9b3682a",
-            "delete": "e5305075c4c9",
-            "configure": "2d0263e221bc"
+            "delete": "fc5fb77f49bb",
+            "configure": "a2879fd6371d"
           },
-          "state": "8b166566e66f",
+          "state": "8c2c55317f83",
           "effects": []
         }
       },
@@ -691,10 +743,10 @@
           "settlements": {
             "list": "44b46aebf7db",
             "download": "eb79a9b3682a",
-            "delete": "e5305075c4c9",
-            "configure": "2d0263e221bc"
+            "delete": "fc5fb77f49bb",
+            "configure": "a2879fd6371d"
           },
-          "state": "8b166566e66f",
+          "state": "8c2c55317f83",
           "effects": []
         }
       },
@@ -706,10 +758,10 @@
           "settlements": {
             "list": "44b46aebf7db",
             "download": "eb79a9b3682a",
-            "delete": "e5305075c4c9",
-            "configure": "2d0263e221bc"
+            "delete": "fc5fb77f49bb",
+            "configure": "a2879fd6371d"
           },
-          "state": "8b166566e66f",
+          "state": "8c2c55317f83",
           "effects": []
         }
       },
@@ -721,10 +773,10 @@
           "settlements": {
             "list": "32a7c0ae7918",
             "download": "eb79a9b3682a",
-            "delete": "e5305075c4c9",
-            "configure": "2d0263e221bc"
+            "delete": "fc5fb77f49bb",
+            "configure": "a2879fd6371d"
           },
-          "state": "8b166566e66f",
+          "state": "8c2c55317f83",
           "effects": []
         }
       },
@@ -736,10 +788,10 @@
           "settlements": {
             "list": "53e0a15f84cd",
             "download": "eb79a9b3682a",
-            "delete": "e5305075c4c9",
-            "configure": "2d0263e221bc"
+            "delete": "fc5fb77f49bb",
+            "configure": "a2879fd6371d"
           },
-          "state": "8b166566e66f",
+          "state": "8c2c55317f83",
           "effects": []
         }
       },
@@ -751,10 +803,10 @@
           "settlements": {
             "list": "b948e8307e81",
             "download": "eb79a9b3682a",
-            "delete": "e5305075c4c9",
-            "configure": "2d0263e221bc"
+            "delete": "fc5fb77f49bb",
+            "configure": "a2879fd6371d"
           },
-          "state": "8b166566e66f",
+          "state": "8c2c55317f83",
           "effects": []
         }
       },
@@ -766,10 +818,10 @@
           "settlements": {
             "list": "a947768bc0ed",
             "download": "eb79a9b3682a",
-            "delete": "e5305075c4c9",
-            "configure": "2d0263e221bc"
+            "delete": "fc5fb77f49bb",
+            "configure": "a2879fd6371d"
           },
-          "state": "8b166566e66f",
+          "state": "8c2c55317f83",
           "effects": []
         }
       },
@@ -781,10 +833,10 @@
           "settlements": {
             "list": "c7584e82c72f",
             "download": "eb79a9b3682a",
-            "delete": "e5305075c4c9",
-            "configure": "2d0263e221bc"
+            "delete": "fc5fb77f49bb",
+            "configure": "a2879fd6371d"
           },
-          "state": "8b166566e66f",
+          "state": "8c2c55317f83",
           "effects": []
         }
       }
