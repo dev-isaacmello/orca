@@ -161,9 +161,12 @@ export const hostViewSettingsSchema = z
  *
  * `worktree.activate` is the one of the four whose payload a *second* consumer looks at, and it is
  * deliberately left opaque: headlessActivationNeedsHostRenderer is a total guard over `unknown`
- * (worktree-activation-result.ts:1), and the session route's second report site awaits its send
- * outside any catch, so a reader that could throw would turn an unreadable activation into an
- * unhandled rejection where main showed no toast.
+ * (worktree-activation-result.ts:1), and the session route's second report site
+ * (use-mobile-session-startup.ts:170) reports from inside a fire-and-forget `void (async …)()` with
+ * no catch of its own, so a reader that could throw would turn an unreadable activation into an
+ * unhandled rejection *and* skip the terminal fetch below it, where main showed no toast and
+ * fetched. This schema staying total is what holds that site safe; the first report site
+ * (:141) is chained `.then(…).catch(…)` and would survive a throw.
  */
 export const hostScreenUnreadReplySchema = z.unknown()
 
