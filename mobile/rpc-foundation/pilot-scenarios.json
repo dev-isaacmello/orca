@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "baseline": "384685c4f7761880f3f5a43cb9f721968807fa50",
+  "baseline": "6142657d7ad4af81cb4449176048edadef10db45",
   "scenarios": [
     {
       "id": "b1",
@@ -5933,6 +5933,64 @@
       ]
     },
     {
+      "id": "tw-create-retry-agent-launched",
+      "operation": "tasks.worktree-create-retry",
+      "version": 1,
+      "family": "worktree.agent-launch-create",
+      "sites": [
+        "mobile/src/tasks/worktree-create-retry.ts",
+        "mobile/src/tasks/agent-launch-worktree-create.ts"
+      ],
+      "schedules": [],
+      "steps": [
+        {
+          "action": "create",
+          "id": "create",
+          "args": {
+            "agentLaunch": true
+          }
+        },
+        {
+          "checkpoint": "sent"
+        },
+        {
+          "complete": "agent.launch#1",
+          "params": {
+            "agent": "codex",
+            "target": {
+              "kind": "create-worktree",
+              "create": {
+                "repo": "id:repo-1",
+                "name": "kestrel",
+                "clientMutationId": "mutation-1"
+              }
+            }
+          },
+          "reply": {
+            "ok": true,
+            "result": {
+              "outcome": {
+                "kind": "structured",
+                "sessionId": "sess-1",
+                "handle": "t-1"
+              },
+              "worktreeId": "repo-1::/w",
+              "warning": "  startup terminal failed  ",
+              "receipt": {
+                "mode": "structured",
+                "preferred": "structured",
+                "reason": "user_default",
+                "detail": "Structured session created."
+              }
+            }
+          }
+        },
+        {
+          "checkpoint": "launched"
+        }
+      ]
+    },
+    {
       "id": "tw-capabilities-advertised",
       "operation": "tasks.worktree-capabilities",
       "version": 1,
@@ -6241,8 +6299,15 @@
             "result": {
               "items": [
                 {
+                  "id": "issue:1",
+                  "type": "issue",
                   "number": 1,
-                  "title": "one"
+                  "title": "one",
+                  "state": "open",
+                  "url": "",
+                  "labels": [],
+                  "updatedAt": "2020-01-01T00:00:00.000Z",
+                  "author": null
                 }
               ]
             }
@@ -6269,8 +6334,15 @@
             "result": {
               "items": [
                 {
-                  "iid": 2,
-                  "title": "two"
+                  "id": "issue:2",
+                  "type": "issue",
+                  "number": 2,
+                  "title": "two",
+                  "state": "opened",
+                  "url": "",
+                  "labels": [],
+                  "updatedAt": "2020-01-01T00:00:00.000Z",
+                  "author": null
                 }
               ],
               "error": {
@@ -6299,7 +6371,24 @@
             "result": {
               "items": [
                 {
-                  "id": "issue-1"
+                  "id": "issue-1",
+                  "identifier": "ENG-1",
+                  "title": "A searched issue",
+                  "url": "",
+                  "state": {
+                    "name": "Todo",
+                    "type": "unstarted",
+                    "color": "#000"
+                  },
+                  "team": {
+                    "id": "team-1",
+                    "key": "ENG",
+                    "name": "Engineering"
+                  },
+                  "labels": [],
+                  "priority": 0,
+                  "updatedAt": "2020-01-01T00:00:00.000Z",
+                  "workspaceId": "linear-workspace"
                 }
               ]
             }
@@ -6350,7 +6439,24 @@
             "ok": true,
             "result": [
               {
-                "id": "issue-3"
+                "id": "issue-3",
+                "identifier": "ENG-3",
+                "title": "An assigned issue",
+                "url": "",
+                "state": {
+                  "name": "In Progress",
+                  "type": "started",
+                  "color": "#111"
+                },
+                "team": {
+                  "id": "team-1",
+                  "key": "ENG",
+                  "name": "Engineering"
+                },
+                "labels": [],
+                "priority": 2,
+                "updatedAt": "2020-01-02T00:00:00.000Z",
+                "workspaceId": "linear-workspace"
               }
             ]
           }
@@ -6389,7 +6495,24 @@
             "ok": true,
             "result": [
               {
-                "id": "issue-2"
+                "id": "issue-2",
+                "identifier": "ENG-2",
+                "title": "An assigned issue",
+                "url": "",
+                "state": {
+                  "name": "Todo",
+                  "type": "unstarted",
+                  "color": "#000"
+                },
+                "team": {
+                  "id": "team-1",
+                  "key": "ENG",
+                  "name": "Engineering"
+                },
+                "labels": [],
+                "priority": 0,
+                "updatedAt": "2020-01-01T00:00:00.000Z",
+                "workspaceId": "linear-workspace"
               }
             ]
           }
@@ -6486,8 +6609,15 @@
           "reply": {
             "ok": true,
             "result": {
+              "id": "issue:12",
+              "type": "issue",
               "number": 12,
-              "title": "twelve"
+              "title": "twelve",
+              "state": "open",
+              "url": "",
+              "labels": [],
+              "updatedAt": "2020-01-01T00:00:00.000Z",
+              "author": null
             }
           }
         },
@@ -6510,8 +6640,15 @@
           "reply": {
             "ok": true,
             "result": {
+              "id": "issue:12",
+              "type": "issue",
               "number": 12,
-              "title": "twelve"
+              "title": "twelve",
+              "state": "open",
+              "url": "",
+              "labels": [],
+              "updatedAt": "2020-01-01T00:00:00.000Z",
+              "author": null
             }
           }
         },
@@ -6534,8 +6671,15 @@
           "reply": {
             "ok": true,
             "result": {
-              "iid": 7,
-              "title": "seven"
+              "id": "issue:7",
+              "type": "issue",
+              "number": 7,
+              "title": "seven",
+              "state": "opened",
+              "url": "",
+              "labels": [],
+              "updatedAt": "2020-01-01T00:00:00.000Z",
+              "author": null
             }
           }
         },
@@ -7960,6 +8104,37 @@
                 }
               ]
             }
+          }
+        },
+        {
+          "checkpoint": "settled"
+        }
+      ]
+    },
+    {
+      "id": "worktree-catalog-snapshot-unreadable",
+      "operation": "worktree.catalog-snapshot",
+      "version": 1,
+      "family": "worktree.catalog-snapshot",
+      "sites": ["mobile/src/worktree/worktree-catalog-snapshot-client.ts"],
+      "schedules": [],
+      "steps": [
+        {
+          "action": "fetch",
+          "id": "fetch"
+        },
+        {
+          "checkpoint": "catalog-pending"
+        },
+        {
+          "complete": "worktree.ps#1",
+          "params": {
+            "limit": 10000,
+            "supportsWorktreeVisibilitySourceDefaults": true,
+            "afterSnapshotId": null
+          },
+          "reply": {
+            "ok": true
           }
         },
         {
@@ -11292,6 +11467,69 @@
       ]
     },
     {
+      "id": "tk-item-detail-github-reactions",
+      "operation": "tasks.item-detail-github",
+      "version": 1,
+      "family": "tasks.item-detail-github",
+      "sites": ["mobile/src/tasks/use-mobile-tasks-item-detail-loading.tsx"],
+      "schedules": [],
+      "steps": [
+        {
+          "action": "mount",
+          "id": "mount"
+        },
+        {
+          "complete": "github.workItemDetails#1",
+          "params": {
+            "number": 12,
+            "repo": "id:repo-1",
+            "type": "pr"
+          },
+          "reply": {
+            "ok": true,
+            "result": {
+              "body": "body",
+              "comments": [
+                {
+                  "id": 901,
+                  "author": "octocat",
+                  "authorAvatarUrl": "",
+                  "body": "a review comment",
+                  "createdAt": "2020-01-01T00:00:00.000Z",
+                  "url": "https://github.com/owner/repo/pull/12#issuecomment-901",
+                  "reactions": [
+                    {
+                      "content": "+1",
+                      "count": 3
+                    },
+                    {
+                      "content": "heart",
+                      "count": 1
+                    }
+                  ]
+                }
+              ],
+              "item": {
+                "labels": ["bug"],
+                "reviewDecision": "APPROVED",
+                "reviewRequests": [],
+                "latestReviews": []
+              },
+              "assignees": ["octocat"],
+              "headSha": "head-sha",
+              "baseSha": "base-sha",
+              "pullRequestId": "PR_kwDO",
+              "checks": [],
+              "files": []
+            }
+          }
+        },
+        {
+          "checkpoint": "mounted"
+        }
+      ]
+    },
+    {
       "id": "tk-item-detail-gitlab",
       "operation": "tasks.item-detail-gitlab",
       "version": 1,
@@ -11316,6 +11554,65 @@
             "result": {
               "body": "body",
               "comments": [],
+              "item": {
+                "labels": ["bug"],
+                "mergeable": "MERGEABLE"
+              },
+              "assignees": [],
+              "pipelineJobs": [],
+              "reviewers": [],
+              "approvalState": {
+                "approvalsRequired": 1,
+                "approvalsLeft": 0
+              }
+            }
+          }
+        },
+        {
+          "checkpoint": "mounted"
+        }
+      ]
+    },
+    {
+      "id": "tk-item-detail-gitlab-reactions",
+      "operation": "tasks.item-detail-gitlab",
+      "version": 1,
+      "family": "tasks.item-detail-gitlab",
+      "sites": ["mobile/src/tasks/use-mobile-tasks-item-detail-loading.tsx"],
+      "schedules": [],
+      "steps": [
+        {
+          "action": "mount",
+          "id": "mount"
+        },
+        {
+          "complete": "gitlab.workItemDetails#1",
+          "params": {
+            "iid": 4,
+            "projectRef": "group/project",
+            "repo": "id:repo-1",
+            "type": "issue"
+          },
+          "reply": {
+            "ok": true,
+            "result": {
+              "body": "body",
+              "comments": [
+                {
+                  "id": 901,
+                  "author": "octocat",
+                  "authorAvatarUrl": "",
+                  "body": "a discussion note",
+                  "createdAt": "2020-01-01T00:00:00.000Z",
+                  "url": "https://gitlab.example.com/group/project/-/issues/4#note_901",
+                  "reactions": [
+                    {
+                      "name": "thumbsup",
+                      "count": 2
+                    }
+                  ]
+                }
+              ],
               "item": {
                 "labels": ["bug"],
                 "mergeable": "MERGEABLE"
@@ -11669,15 +11966,16 @@
             "result": [
               {
                 "id": 1,
+                "actionName": "review_requested",
                 "targetType": "Issue",
-                "target": {
-                  "id": "gid://1",
-                  "iid": 4,
-                  "title": "A GitLab todo",
-                  "webUrl": "",
-                  "state": "opened",
-                  "updatedAt": "2020-01-01T00:00:00.000Z"
-                }
+                "targetIid": 4,
+                "targetTitle": "A GitLab todo",
+                "targetUrl": "https://gitlab.example.com/group/project/-/issues/4",
+                "projectPath": "group/project",
+                "authorUsername": "octocat",
+                "authorAvatarUrl": "",
+                "updatedAt": "2020-01-01T00:00:00.000Z",
+                "state": "pending"
               }
             ]
           }
@@ -12296,9 +12594,10 @@
           "reply": {
             "ok": true,
             "result": {
-              "oldContent": "a",
-              "newContent": "b",
-              "truncated": false
+              "original": "a",
+              "modified": "b",
+              "originalIsBinary": false,
+              "modifiedIsBinary": false
             }
           }
         },
@@ -13637,9 +13936,10 @@
           "reply": {
             "ok": true,
             "result": {
-              "oldContent": "a",
-              "newContent": "b",
-              "truncated": false
+              "original": "a",
+              "modified": "b",
+              "originalIsBinary": false,
+              "modifiedIsBinary": false
             }
           }
         },
@@ -19786,6 +20086,129 @@
         },
         {
           "checkpoint": "accepted"
+        }
+      ]
+    },
+    {
+      "id": "notifications-display-test-not-registered",
+      "operation": "notifications.display-test-screen",
+      "version": 1,
+      "family": "notifications.display-test-screen",
+      "sites": ["mobile/src/settings/notification-display-test.tsx"],
+      "schedules": [],
+      "deviceStore": {
+        "orca:hosts": "[{\"id\":\"host-1\",\"name\":\"Desk\",\"endpoint\":\"ws://desk.local:7777\",\"publicKeyB64\":\"AAAA\",\"lastConnected\":1700000000000}]"
+      },
+      "steps": [
+        {
+          "action": "mount",
+          "id": "mount"
+        },
+        {
+          "checkpoint": "mounted"
+        },
+        {
+          "action": "send-test",
+          "id": "press"
+        },
+        {
+          "checkpoint": "sending"
+        },
+        {
+          "complete": "notifications.testPush#1",
+          "params": null,
+          "reply": {
+            "ok": true,
+            "result": {
+              "accepted": false,
+              "reason": "not_registered"
+            }
+          }
+        },
+        {
+          "checkpoint": "not-registered"
+        }
+      ]
+    },
+    {
+      "id": "notifications-display-test-rate-limited",
+      "operation": "notifications.display-test-screen",
+      "version": 1,
+      "family": "notifications.display-test-screen",
+      "sites": ["mobile/src/settings/notification-display-test.tsx"],
+      "schedules": [],
+      "deviceStore": {
+        "orca:hosts": "[{\"id\":\"host-1\",\"name\":\"Desk\",\"endpoint\":\"ws://desk.local:7777\",\"publicKeyB64\":\"AAAA\",\"lastConnected\":1700000000000}]"
+      },
+      "steps": [
+        {
+          "action": "mount",
+          "id": "mount"
+        },
+        {
+          "checkpoint": "mounted"
+        },
+        {
+          "action": "send-test",
+          "id": "press"
+        },
+        {
+          "checkpoint": "sending"
+        },
+        {
+          "complete": "notifications.testPush#1",
+          "params": null,
+          "reply": {
+            "ok": true,
+            "result": {
+              "accepted": false,
+              "reason": "rate_limited"
+            }
+          }
+        },
+        {
+          "checkpoint": "rate-limited"
+        }
+      ]
+    },
+    {
+      "id": "notifications-display-test-unknown-reason",
+      "operation": "notifications.display-test-screen",
+      "version": 1,
+      "family": "notifications.display-test-screen",
+      "sites": ["mobile/src/settings/notification-display-test.tsx"],
+      "schedules": [],
+      "deviceStore": {
+        "orca:hosts": "[{\"id\":\"host-1\",\"name\":\"Desk\",\"endpoint\":\"ws://desk.local:7777\",\"publicKeyB64\":\"AAAA\",\"lastConnected\":1700000000000}]"
+      },
+      "steps": [
+        {
+          "action": "mount",
+          "id": "mount"
+        },
+        {
+          "checkpoint": "mounted"
+        },
+        {
+          "action": "send-test",
+          "id": "press"
+        },
+        {
+          "checkpoint": "sending"
+        },
+        {
+          "complete": "notifications.testPush#1",
+          "params": null,
+          "reply": {
+            "ok": true,
+            "result": {
+              "accepted": false,
+              "reason": "quota_exceeded"
+            }
+          }
+        },
+        {
+          "checkpoint": "unknown-reason"
         }
       ]
     },

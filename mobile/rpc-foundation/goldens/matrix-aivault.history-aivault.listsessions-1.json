@@ -3,9 +3,9 @@
   "family": "aiVault.history",
   "namedDeltas": [],
   "runnerVersion": 1,
-  "baseline": "384685c4f7761880f3f5a43cb9f721968807fa50",
+  "baseline": "6142657d7ad4af81cb4449176048edadef10db45",
   "lockfileSha256": "4568633356187895ccda8e2ff83245c37d5621832c69e268733733b6947971e3",
-  "recorderSha256": "d4fa125899cd863c03dbf96657d46b8c7d6c0ccf522b342bc4f164ed1e3becfe",
+  "recorderSha256": "1d8cf6624653d15b5b32bd2871d4d93739d4092a06f10dab24a795702422bb31",
   "adapterSha256": "7add46922ba5486e56c8acd99a53d083b605f5d98f3cc44ee3cb350ec0406080",
   "scenarioSha256": "efb8d1cd2a2ff0ade4cdc48a1aacec565e33b405bbe95c100b86534cdde49740",
   "platform": "darwin",
@@ -84,6 +84,18 @@
           "message": "",
           "isRpcDeliveryUnknown": true
         }
+      }
+    },
+    "1277d47c0e64": {
+      "activeWorktreePath": "/repo/feature",
+      "hostStatusResult": {
+        "$rpc": "null"
+      },
+      "refreshing": false,
+      "scope": "workspace",
+      "screenState": {
+        "kind": "error",
+        "message": "Cannot read properties of undefined (reading 'sessions')"
       }
     },
     "23523c413cbd": {
@@ -283,6 +295,18 @@
             "ok": false
           }
         }
+      }
+    },
+    "61f76365e23c": {
+      "activeWorktreePath": "/repo/feature",
+      "hostStatusResult": {
+        "$rpc": "null"
+      },
+      "refreshing": false,
+      "scope": "workspace",
+      "screenState": {
+        "kind": "error",
+        "message": "Cannot read properties of null (reading 'sessions')"
       }
     },
     "698f848e6967": {
@@ -547,16 +571,21 @@
         "$rpc": "undefined"
       }
     },
-    "fead2d57ab18": {
+    "fc659419e768": {
       "activeWorktreePath": "/repo/feature",
       "hostStatusResult": {
-        "$rpc": "null"
+        "capabilities": ["aiVault.v1"]
       },
       "refreshing": false,
       "scope": "workspace",
       "screenState": {
-        "kind": "error",
-        "message": "The host sent a reply this app could not read (aiVault.listSessions)"
+        "issues": {
+          "$rpc": "undefined"
+        },
+        "kind": "ready",
+        "sessions": {
+          "$rpc": "undefined"
+        }
       }
     }
   },
@@ -583,7 +612,7 @@
           "settlements": {
             "mount": "eb79a9b3682a"
           },
-          "state": "fead2d57ab18",
+          "state": "1277d47c0e64",
           "effects": []
         }
       },
@@ -595,7 +624,7 @@
           "settlements": {
             "mount": "eb79a9b3682a"
           },
-          "state": "fead2d57ab18",
+          "state": "61f76365e23c",
           "effects": []
         }
       },
@@ -607,7 +636,7 @@
           "settlements": {
             "mount": "eb79a9b3682a"
           },
-          "state": "fead2d57ab18",
+          "state": "fc659419e768",
           "effects": []
         }
       },
@@ -619,7 +648,7 @@
           "settlements": {
             "mount": "eb79a9b3682a"
           },
-          "state": "fead2d57ab18",
+          "state": "fc659419e768",
           "effects": []
         }
       },
@@ -631,7 +660,7 @@
           "settlements": {
             "mount": "eb79a9b3682a"
           },
-          "state": "fead2d57ab18",
+          "state": "fc659419e768",
           "effects": []
         }
       },
