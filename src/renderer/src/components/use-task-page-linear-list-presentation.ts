@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 
 import { getLinearIssueGridTemplate, groupLinearIssues } from './task-page-linear-jira-list-model'
 import type { LinearIssueListRow } from './task-page-linear-issue-model'
@@ -56,13 +56,32 @@ export function useTaskPageLinearListPresentation(model: TaskPageLinearListProje
     () => groupLinearIssues(pagedLinearIssues, linearGroupBy, linearOrderBy),
     [pagedLinearIssues, linearGroupBy, linearOrderBy]
   )
+  const [collapsedLinearSectionKeys, setCollapsedLinearSectionKeys] = useState<Set<string>>(
+    () => new Set()
+  )
+  // Section keys are grouping-specific, so a stale collapse would hide an unrelated section.
+  useEffect(() => {
+    setCollapsedLinearSectionKeys((current) => (current.size === 0 ? current : new Set()))
+  }, [linearGroupBy])
+  const toggleLinearSection = useCallback((key: string) => {
+    setCollapsedLinearSectionKeys((current) => {
+      const next = new Set(current)
+      if (!next.delete(key)) {
+        next.add(key)
+      }
+      return next
+    })
+  }, [])
   const linearIssueListRows = useMemo<LinearIssueListRow[]>(
     () =>
       linearIssueSections.flatMap((section) => {
-        const issueRows = section.issues.map((issue) => ({
-          type: 'issue' as const,
-          issue
-        }))
+        const collapsed = linearGroupBy !== 'none' && collapsedLinearSectionKeys.has(section.key)
+        const issueRows = collapsed
+          ? []
+          : section.issues.map((issue) => ({
+              type: 'issue' as const,
+              issue
+            }))
         if (linearGroupBy === 'none') {
           return issueRows
         }
@@ -71,13 +90,15 @@ export function useTaskPageLinearListPresentation(model: TaskPageLinearListProje
             type: 'section' as const,
             key: section.key,
             label: section.label,
-            count: section.issues.length
+            count: section.issues.length,
+            collapsed
           },
           ...issueRows
         ]
       }),
-    [linearGroupBy, linearIssueSections]
+    [collapsedLinearSectionKeys, linearGroupBy, linearIssueSections]
   )
+  // oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: every widened field is assigned on nextModel immediately below, so the assertion only names what this hook attaches.
   const nextModel = model as typeof model & {
     selectedLinearTeamForExternalLink: typeof selectedLinearTeamForExternalLink
     effectiveLinearDisplayProperties: typeof effectiveLinearDisplayProperties
@@ -85,6 +106,7 @@ export function useTaskPageLinearListPresentation(model: TaskPageLinearListProje
     linearIssueGridStyle: typeof linearIssueGridStyle
     linearIssueSections: typeof linearIssueSections
     linearIssueListRows: typeof linearIssueListRows
+    toggleLinearSection: typeof toggleLinearSection
   }
   nextModel.selectedLinearTeamForExternalLink = selectedLinearTeamForExternalLink
   nextModel.effectiveLinearDisplayProperties = effectiveLinearDisplayProperties
@@ -92,6 +114,7 @@ export function useTaskPageLinearListPresentation(model: TaskPageLinearListProje
   nextModel.linearIssueGridStyle = linearIssueGridStyle
   nextModel.linearIssueSections = linearIssueSections
   nextModel.linearIssueListRows = linearIssueListRows
+  nextModel.toggleLinearSection = toggleLinearSection
   return nextModel
 }
 
