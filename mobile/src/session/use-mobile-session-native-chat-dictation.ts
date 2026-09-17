@@ -196,7 +196,9 @@ export function useMobileSessionNativeChatDictation(
     }
     try {
       const setup = await fetchDictationSetup(client)
-      setDictationMode(setup.dictationMode)
+      // Why `?? 'toggle'`: the reply reader salvages an unreadable mode to absent, and this state's
+      // own initial value is what an absent mode always left it at.
+      setDictationMode(setup.dictationMode ?? 'toggle')
     } catch {
       // Non-fatal: fall back to the default toggle behavior.
     }

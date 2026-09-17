@@ -51,11 +51,12 @@ const speechModelSchema = z.looseObject({
  * `models` is required: MobileDictationSetupSheet.tsx:49 and VoiceModelList.tsx:53 read `.some` and
  * `.map` on it with no guard, so a reply without one was a TypeError inside the sheet's own refresh.
  *
- * `dictationMode` is required and its arm set is open, degrading to `toggle`. It is the one member
- * a consumer cannot supply a value for: use-mobile-session-native-chat-dictation.ts:199 pushes it
- * straight into a `useState<'toggle' | 'hold'>` whose own initial value is `toggle`, so an unknown
- * arm degrades to the state the screen already starts in rather than to a value that matches no
- * segment. The host declares it required and has always sent it.
+ * `dictationMode` is salvaged like the rest, and its arm set is open: an arm this build has not
+ * heard of degrades to `toggle`, the value the screen's own `useState<'toggle' | 'hold'>` starts at,
+ * rather than to one that matches no segment. It is NOT required even though the host declares it
+ * so — main rendered a sheet without one, and requiring a member no consumer crashes on is the
+ * version claim Rule 1 of the remote-wire contract warns about. The native-chat reader supplies the
+ * same `toggle` for an absent mode that its state already held.
  *
  * `enabled` and `selectedModelId` stay salvaged: both are read behind `!`/`===` and a reply missing
  * either renders an off switch and no selected row, which is what main rendered for the same reply.
@@ -63,7 +64,7 @@ const speechModelSchema = z.looseObject({
 export const dictationSetupSchema = z.looseObject({
   enabled: salvagedOptional('enabled', z.boolean()),
   selectedModelId: salvagedOptional('selectedModelId', z.string()),
-  dictationMode: openEnum(DICTATION_MODES, 'toggle'),
+  dictationMode: salvagedOptional('dictationMode', openEnum(DICTATION_MODES, 'toggle')),
   models: salvagingArray(speechModelSchema)
 })
 

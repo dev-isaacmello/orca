@@ -23,8 +23,10 @@ describe('dictation setup reply schema', () => {
     expect(dictationSetupSchema.parse(setup({ dictationMode: 'hold' })).dictationMode).toBe('hold')
   })
 
-  it('refuses a dictation mode that is not a string at all', () => {
-    expect(dictationSetupSchema.safeParse(setup({ dictationMode: 3 })).success).toBe(false)
+  it('keeps a sheet whose mode is absent or unreadable, which main rendered', () => {
+    const { dictationMode: _mode, ...withoutMode } = setup()
+    expect(dictationSetupSchema.parse(withoutMode).dictationMode).toBeUndefined()
+    expect(dictationSetupSchema.parse(setup({ dictationMode: 3 })).dictationMode).toBeUndefined()
   })
 
   it('salvages enabled and selectedModelId onto the off-and-unselected sheet main drew', () => {
