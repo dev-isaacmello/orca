@@ -7,8 +7,10 @@ import {
 
 describe('file preview reply schemas', () => {
   it('requires the content the markdown disk fallback publishes unguarded', () => {
+    // `content` alone, with no sibling requirement able to stand in for it.
     expect(filePreviewTextSchema.safeParse({ truncated: false, byteLength: 0 }).success).toBe(false)
     expect(filePreviewTextSchema.safeParse({ content: '# readme' }).success).toBe(true)
+    expect(filePreviewTextSchema.safeParse({ content: 7 }).success).toBe(false)
   })
 
   it('salvages truncated and byteLength onto the fallbacks main already had', () => {

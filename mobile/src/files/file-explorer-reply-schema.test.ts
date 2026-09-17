@@ -25,9 +25,13 @@ describe('file explorer reply schemas', () => {
   })
 
   it('requires the capped list and the note it draws', () => {
-    expect(legacyFileListSchema.safeParse({ files: [] }).success).toBe(false)
-    expect(legacyFileListSchema.safeParse({ truncated: false }).success).toBe(false)
-    expect(legacyFileListSchema.safeParse({ files: [], truncated: true }).success).toBe(true)
+    const listed = { files: [], truncated: true }
+    expect(legacyFileListSchema.safeParse(listed).success).toBe(true)
+    // One at a time, so a sibling requirement cannot stand in for the member under test.
+    for (const member of ['files', 'truncated'] as const) {
+      const { [member]: _dropped, ...without } = listed
+      expect(legacyFileListSchema.safeParse(without).success).toBe(false)
+    }
   })
 
   it('drops a legacy row that names no path and keeps the rest', () => {

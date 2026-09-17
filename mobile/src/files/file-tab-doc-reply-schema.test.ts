@@ -8,11 +8,13 @@ import {
 
 describe('file tab doc reply schemas', () => {
   it('requires the three members the tab publishes into a ready document', () => {
-    expect(fileTabTextSchema.safeParse({ content: 'a', truncated: false }).success).toBe(false)
-    expect(fileTabTextSchema.safeParse({ content: 'a', byteLength: 1 }).success).toBe(false)
-    expect(
-      fileTabTextSchema.safeParse({ content: 'a', truncated: false, byteLength: 1 }).success
-    ).toBe(true)
+    const ready = { content: 'a', truncated: false, byteLength: 1 }
+    expect(fileTabTextSchema.safeParse(ready).success).toBe(true)
+    // One at a time, so a sibling requirement cannot stand in for the member under test.
+    for (const member of ['content', 'truncated', 'byteLength'] as const) {
+      const { [member]: _dropped, ...without } = ready
+      expect(fileTabTextSchema.safeParse(without).success).toBe(false)
+    }
   })
 
   it('requires the image content buildImageDataUri calls replace on', () => {
