@@ -8,9 +8,10 @@ import { salvagedOptional, salvagingArray } from '../../../src/shared/zod-salvag
 /**
  * One directory's entries.
  *
- * The payload is the array itself, and it is required: MobileFileExplorerPanel.tsx:160 puts it
- * straight into the directory cache, where buildFileExplorerRows sorts and walks it — a reply that
- * was not an array was a `.filter` on a string one render later, with nothing naming the reply.
+ * The payload is the array itself, and it is required: MobileFileExplorerPanel.tsx:157 puts it
+ * straight into the directory cache, where flattenDirectoryCache (file-tree.ts:58) sorts and walks
+ * it — a reply that was not an array was a `.filter` on a string one render later, with nothing
+ * naming the reply.
  *
  * A row needs `name` and `isDirectory`, and a row without either drops rather than failing the
  * whole read, which is what a skip policy means for a directory listing: compareFileNames reads
@@ -30,8 +31,8 @@ export const fileDirectoryEntriesSchema = salvagingArray(
  * The capped flat list an older desktop answers when `files.readDir` is not allowlisted.
  *
  * `files` and `truncated` are both required and both read unguarded: directoryCacheFromFileList
- * walks `files` and splits each `relativePath` (file-list-fallback.ts:42), and
- * MobileFileExplorerPanel.tsx:141 publishes `truncated` into the state that draws the "Showing
+ * walks `files` and splits each `relativePath` (file-list-fallback.ts:48), and
+ * MobileFileExplorerPanel.tsx:136 publishes `truncated` into the state that draws the "Showing
  * first 5000" note. A row without a string `relativePath` drops — it can name no directory — where
  * main crashed the whole fallback on it.
  *

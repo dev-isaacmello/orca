@@ -14,7 +14,7 @@ import { salvagedOptional } from '../../../src/shared/zod-salvage'
  * The text a file tab renders, from `files.read`.
  *
  * All three are required because all three are published unguarded into MobileFileTabDoc:
- * mobile-file-tab-doc.ts:81 renders `content` as the html body and :86-88 puts `content`,
+ * mobile-file-tab-doc.ts:68 renders `content` as the html body and :73-75 puts `content`,
  * `truncated` and `byteLength` into the `file` arm, whose size label and truncation banner read
  * them as a number and a boolean. A reply missing one rendered `undefined` in the tab. All three
  * are declared required by RuntimeFileReadResult, so no host that answers this method omits them.
@@ -29,7 +29,7 @@ export const fileTabTextSchema = z.looseObject({
  * The image bytes a file tab renders, from `files.readPreview`.
  *
  * `content` is required: buildImageDataUri runs `base64Content.replace` with no guard once
- * `isImage` is truthy (mobile-file-tab-doc.ts:66), so a reply without a string content was a
+ * `isImage` is truthy (mobile-file-tab-doc.ts:58), so a reply without a string content was a
  * TypeError. RuntimeFilePreviewResult declares it required.
  *
  * `mimeType` is a plain optional rather than a salvaged one, because main had no fallback for a
@@ -50,7 +50,7 @@ export const fileTabImageSchema = z.looseObject({
  * The text arm of `git.diff`: the only arm whose contents are read.
  *
  * Both sides are required because buildMobileDiffLines reads `content.length` on each with no
- * guard (mobile-diff-lines.ts:34), so a text diff missing one was a TypeError caught as
+ * guard (mobile-diff-lines.ts:35), so a text diff missing one was a TypeError caught as
  * "Couldn't load diff preview".
  */
 const fileTabTextDiffSchema = z.looseObject({
@@ -63,13 +63,13 @@ const fileTabTextDiffSchema = z.looseObject({
  * Every other arm of `git.diff`, including one this build has not heard of.
  *
  * The arm set is a wire surface, so an unknown `kind` degrades here rather than refusing the reply:
- * mobile-file-tab-doc.ts:44 asks only `kind !== 'text'`, and an unknown arm took this branch on
+ * mobile-file-tab-doc.ts:41 asks only `kind !== 'text'`, and an unknown arm took this branch on
  * main too. `kind` is therefore any string but `text` — routing an unreadable *text* diff here
  * instead would render "Binary preview unavailable" for a diff whose contents simply did not
  * arrive, which names the file rather than the reply.
  *
  * Nothing in the arm is required: mobileDiffImageDataUri guards every member it reads
- * (mobile-diff-image-preview.ts:20-31) and answers null — 'binary_file' — for anything it cannot
+ * (mobile-diff-image-preview.ts:22-33) and answers null — 'binary_file' — for anything it cannot
  * use. `isImage` and `modifiedDeleted` are `=== true` comparisons, so a salvaged member lands on
  * main's own arm; `mimeType` is a plain optional for the same reason the image tab's is.
  *

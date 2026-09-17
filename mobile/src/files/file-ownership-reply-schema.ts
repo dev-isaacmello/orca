@@ -13,7 +13,7 @@ import { salvagedOptional } from '../../../src/shared/zod-salvage'
  * The workspace row a mutation targets.
  *
  * The payload wrapper stays nullish so an absent `worktree` still reaches
- * mobile-file-mutation-ownership.ts:64 as the `!summary` throw main had, rather than as a decode
+ * mobile-file-mutation-ownership.ts:68 as the `!summary` throw main had, rather than as a decode
  * failure — the host answers `{ worktree: undefined }` for a selector it cannot resolve.
  *
  * `hostId` is a plain nullable optional, not a salvaged one, and the distinction is load-bearing

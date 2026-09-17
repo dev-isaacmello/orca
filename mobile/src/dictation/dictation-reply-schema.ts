@@ -79,8 +79,9 @@ export type MobileSpeechModelReply = MobileSpeechSetupReply['models'][number]
  *
  * `speech.dictation.finish` is here for a different reason, and it is the one site in this domain
  * left deliberately unchecked. Its transcript is read at the call site through `rpcPayloadMember`
- * *after* a staleness guard (use-mobile-dictation.ts:237), and the interpretation that a schema
- * would fail runs before that guard. Checking it would report an unreadable reply for a dictation
+ * (use-mobile-dictation.ts:237) *after* a staleness guard (:225), and the interpretation that a
+ * schema would fail runs before that guard. Checking it would report an unreadable reply for a
+ * dictation
  * the user had already superseded, where main returned silently; the member read itself is guarded
  * by `typeof transcript === 'string'` and is fenced by the raw-port inventory.
  */

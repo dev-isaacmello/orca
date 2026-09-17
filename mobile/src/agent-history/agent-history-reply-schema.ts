@@ -26,7 +26,7 @@ export const agentHistoryHostStatusSchema = z.looseObject({
 /**
  * The session scan.
  *
- * Both members are required arrays: use-mobile-agent-history-state.ts:135 publishes them straight
+ * Both members are required arrays: use-mobile-agent-history-state.ts:133-135 publishes them straight
  * into the ready screen state, where the list maps `sessions` and the issue banner counts `issues`
  * — a reply missing either left the screen `ready` over an undefined container and crashed on the
  * next render, which is the defect this reader exists to name.

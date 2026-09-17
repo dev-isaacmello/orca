@@ -20,7 +20,7 @@ import { salvagedOptional } from '../../../src/shared/zod-salvage'
  * the preview screen normalizes both through the same projection.
  *
  * `content` is required because the markdown disk fallback reads it with no guard —
- * use-mobile-session-document-readers.ts:65 publishes it straight into the tab's ready document, so
+ * use-mobile-session-document-readers.ts:60 publishes it straight into the tab's ready document, so
  * a reply without one rendered `undefined` in the editor. The preview screen's own reader guards it
  * (`typeof preview.content !== 'string'` in mobile-file-preview-response.ts:142) and lands on
  * 'Unable to load preview', which is the same copy `previewError` gives the incompatible-reply
