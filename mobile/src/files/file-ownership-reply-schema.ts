@@ -18,8 +18,9 @@ import { salvagedOptional } from '../../../src/shared/zod-salvage'
  *
  * `hostId` is a plain nullable optional, not a salvaged one, and the distinction is load-bearing
  * twice over. Its three states are distinct to buildMobileFileMutationOwnership: absent means "no
- * host recorded" and yields a local capture, `null` means the host said local, and a string is
- * parsed. A salvage would fold a *wrong-typed* hostId into absent and let the mutation go local;
+ * host recorded" and yields a local capture, `null` means the reply named a host this client cannot
+ * place and is refused (mobile-file-mutation-ownership.ts:32, pinned at its test:122), and a string
+ * is parsed. A salvage would fold a *wrong-typed* hostId into absent and let the mutation go local;
  * main threw "Couldn't verify the SSH connection" on it, and an incompatible reply throws too.
  */
 export const fileOwnershipWorktreeSchema = z

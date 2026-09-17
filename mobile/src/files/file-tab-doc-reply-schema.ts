@@ -89,8 +89,8 @@ const fileTabBinaryDiffSchema = z.looseObject({
   mimeType: z.string().optional()
 })
 
-export type MobileFileTabTextDiff = z.output<typeof fileTabTextDiffSchema>
-export type MobileFileTabBinaryDiff = z.output<typeof fileTabBinaryDiffSchema>
-export type MobileFileTabDiff = MobileFileTabTextDiff | MobileFileTabBinaryDiff
+export type MobileFileTabDiff =
+  | z.output<typeof fileTabTextDiffSchema>
+  | z.output<typeof fileTabBinaryDiffSchema>
 
 export { fileTabBinaryDiffSchema, fileTabTextDiffSchema }

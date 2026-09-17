@@ -27,9 +27,9 @@ export const agentHistoryHostStatusSchema = z.looseObject({
  * The session scan.
  *
  * Both members are required arrays: use-mobile-agent-history-state.ts:135 publishes them straight
- * into the ready screen state, where the list maps `sessions` and the issue banner maps `issues` —
- * a reply missing either left the screen `ready` over an undefined list and crashed on the next
- * render, which is the defect this reader exists to name.
+ * into the ready screen state, where the list maps `sessions` and the issue banner counts `issues`
+ * — a reply missing either left the screen `ready` over an undefined container and crashed on the
+ * next render, which is the defect this reader exists to name.
  *
  * The rows stay unknown, and that is deliberate rather than unfinished. A row is an AiVaultSession,
  * whose `agent` is a 21-arm vocabulary that grows with every agent CLI Orca learns to scan — and
