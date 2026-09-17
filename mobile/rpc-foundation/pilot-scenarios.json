@@ -22512,6 +22512,190 @@
           "checkpoint": "settled"
         }
       ]
+    },
+    {
+      "id": "files-preview-worktree-text-read",
+      "operation": "files.preview-load",
+      "version": 1,
+      "family": "files.preview-worktree-text",
+      "sites": ["mobile/src/files/mobile-file-preview-request.ts"],
+      "schedules": [],
+      "steps": [
+        {
+          "action": "worktree",
+          "id": "load"
+        },
+        {
+          "complete": "files.read#1",
+          "params": {
+            "worktree": "id:workspace-1",
+            "relativePath": "docs/readme.md"
+          },
+          "reply": {
+            "ok": true,
+            "result": {
+              "content": "# readme",
+              "truncated": false,
+              "byteLength": 8
+            }
+          }
+        },
+        {
+          "checkpoint": "settled"
+        }
+      ]
+    },
+    {
+      "id": "files-preview-worktree-image-read",
+      "operation": "files.preview-load",
+      "version": 1,
+      "family": "files.preview-worktree-image",
+      "sites": ["mobile/src/files/mobile-file-preview-request.ts"],
+      "schedules": [],
+      "steps": [
+        {
+          "action": "worktree",
+          "id": "load",
+          "args": {
+            "path": "docs/logo.png"
+          }
+        },
+        {
+          "complete": "files.readPreview#1",
+          "params": {
+            "worktree": "id:workspace-1",
+            "relativePath": "docs/logo.png"
+          },
+          "reply": {
+            "ok": true,
+            "result": {
+              "content": "aGk=",
+              "isBinary": true,
+              "isImage": true,
+              "mimeType": "image/png"
+            }
+          }
+        },
+        {
+          "checkpoint": "settled"
+        }
+      ]
+    },
+    {
+      "id": "files-preview-artifact-image-read",
+      "operation": "files.preview-load",
+      "version": 1,
+      "family": "files.preview-artifact-image",
+      "sites": ["mobile/src/files/mobile-file-preview-request.ts"],
+      "schedules": [],
+      "steps": [
+        {
+          "action": "artifact",
+          "id": "load",
+          "args": {
+            "path": "/logs/shot.png"
+          }
+        },
+        {
+          "complete": "files.readTerminalArtifactPreview#1",
+          "params": {
+            "worktree": "id:workspace-1",
+            "absolutePath": "/logs/shot.png",
+            "grantId": "grant-1"
+          },
+          "reply": {
+            "ok": true,
+            "result": {
+              "content": "aGk=",
+              "isBinary": true,
+              "isImage": true,
+              "mimeType": "image/png"
+            }
+          }
+        },
+        {
+          "checkpoint": "settled"
+        }
+      ]
+    },
+    {
+      "id": "session-markdown-disk-read",
+      "operation": "session.tab-documents",
+      "version": 1,
+      "family": "session.markdown-disk-fallback",
+      "sites": ["mobile/src/session/use-mobile-session-document-readers.ts"],
+      "schedules": [],
+      "steps": [
+        {
+          "action": "markdown",
+          "id": "markdown"
+        },
+        {
+          "complete": "markdown.readTab#1",
+          "params": {
+            "tabId": "tab-md",
+            "worktree": "id:workspace-1"
+          },
+          "reply": {
+            "ok": false,
+            "error": {
+              "code": "renderer_unavailable",
+              "message": "Renderer unavailable"
+            }
+          }
+        },
+        {
+          "complete": "files.read#1",
+          "params": {
+            "relativePath": "docs/readme.md",
+            "worktree": "id:workspace-1"
+          },
+          "reply": {
+            "ok": true,
+            "result": {
+              "content": "# disk",
+              "truncated": false,
+              "byteLength": 6
+            }
+          }
+        },
+        {
+          "checkpoint": "fell-back"
+        }
+      ]
+    },
+    {
+      "id": "session-markdown-disk-served",
+      "operation": "session.tab-documents",
+      "version": 1,
+      "family": "session.markdown-disk-fallback",
+      "sites": ["mobile/src/session/use-mobile-session-document-readers.ts"],
+      "schedules": [],
+      "steps": [
+        {
+          "action": "markdown",
+          "id": "markdown"
+        },
+        {
+          "complete": "markdown.readTab#1",
+          "params": {
+            "tabId": "tab-md",
+            "worktree": "id:workspace-1"
+          },
+          "reply": {
+            "ok": true,
+            "result": {
+              "content": "# served",
+              "version": "v1",
+              "isDirty": false,
+              "editable": true
+            }
+          }
+        },
+        {
+          "checkpoint": "served"
+        }
+      ]
     }
   ]
 }
