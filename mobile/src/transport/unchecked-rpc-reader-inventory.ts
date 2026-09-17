@@ -46,25 +46,14 @@ export type UncheckedRpcReaderEntry = {
  * else, never `.strict()` — turns the assertion into a check and deletes the line.
  */
 export const UNCHECKED_RPC_READERS: readonly UncheckedRpcReaderEntry[] = [
-  // agent-history
-  { file: 'src/agent-history/mobile-agent-history-operations.ts', readers: 6 },
   // browser
   { file: 'src/browser/mobile-browser-command-operations.ts', readers: 1 },
   // components
   { file: 'src/components/codex-reset-credit-capability-operations.ts', readers: 1 },
   { file: 'src/components/codex-reset-credit-consume-operations.ts', readers: 1 },
   { file: 'src/components/new-workspace-operations.ts', readers: 2 },
-  // dictation
-  { file: 'src/dictation/mobile-dictation-operations.ts', readers: 8 },
-  // files
-  { file: 'src/files/mobile-file-explorer-operations.ts', readers: 2 },
-  { file: 'src/files/mobile-file-ownership-operations.ts', readers: 2 },
-  { file: 'src/files/mobile-file-preview-operations.ts', readers: 6 },
-  { file: 'src/files/mobile-file-tab-doc-operations.ts', readers: 3 },
   // home
   { file: 'src/home/mobile-home-host-operations.ts', readers: 2 },
-  // host-screen
-  { file: 'src/host-screen/host-screen-operations.ts', readers: 8 },
   // notifications
   { file: 'src/notifications/desktop-notification-stream-operations.ts', readers: 1 },
   { file: 'src/notifications/mobile-push-delivery-test-operations.ts', readers: 1 },
