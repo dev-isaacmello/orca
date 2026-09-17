@@ -79,11 +79,22 @@ describe('host screen reply schemas', () => {
     ).toEqual([{ id: 't', label: 'T' }])
   })
 
+  it('answers the empty target list for a reply that is no object at all', () => {
+    // Why: the label write runs before the platform write in the same sequence, so a throw here
+    // would take the platform down with it. readSshTargets answered [] for every one of these.
+    for (const payload of [null, undefined, 'nope', 42, []]) {
+      expect(hostSshTargetSummariesSchema.parse(payload)).toEqual([])
+    }
+  })
+
   it('reads only a platform Node could have reported', () => {
     expect(hostPlatformSchema.parse({ platform: 'win32' })).toBe('win32')
     expect(hostPlatformSchema.parse({ platform: 'plan9' })).toBeNull()
     expect(hostPlatformSchema.parse({ platform: '' })).toBeNull()
     expect(hostPlatformSchema.parse({})).toBeNull()
+    for (const payload of [null, undefined, 'nope', 42]) {
+      expect(hostPlatformSchema.parse(payload)).toBeNull()
+    }
   })
 
   it('requires the ui member main read with a bare property access', () => {

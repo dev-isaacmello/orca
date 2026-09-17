@@ -79,6 +79,10 @@ export const hostRepoCatalogSchema = z
  * `targets` itself is salvaged rather than required because main answered `[]` for a reply without
  * it, and a `[]` here is what makes the labels degrade to host ids — the documented behaviour for a
  * host that predates the method.
+ *
+ * Total, like the reader it replaces: `readSshTargets` answered `[]` for any payload at all, and
+ * the caller writes the labels before it reads the platform, so a throw here would also skip the
+ * platform write. The `.catch` keeps a non-object reply degrading exactly where main degraded.
  */
 export const hostSshTargetSummariesSchema = z
   .looseObject({
@@ -88,6 +92,7 @@ export const hostSshTargetSummariesSchema = z
     )
   })
   .transform((reply) => reply.targets ?? [])
+  .catch(() => [])
 
 /**
  * The paired host's own platform.
@@ -97,10 +102,14 @@ export const hostSshTargetSummariesSchema = z
  * naming the desktop. The arm set is closed over Node's platform domain rather than over anything
  * Orca versions: the handler returns `process.platform` and nothing else, and a string outside that
  * set names no path convention this client could apply.
+ *
+ * Total for the same reason as the SSH targets above: `readHostPlatform` answered `null` for any
+ * payload, so a non-object reply degrades here instead of throwing past the label write.
  */
 export const hostPlatformSchema = z
   .looseObject({ platform: salvagedOptional('platform', z.enum(NODE_PLATFORMS)) })
   .transform((reply) => reply.platform ?? null)
+  .catch(() => null)
 
 /**
  * The desktop's shared workspace view settings, read off `ui.get`'s `ui` member.
