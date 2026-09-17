@@ -1179,6 +1179,118 @@
       ]
     },
     {
+      "id": "settings-repo-metadata-icons",
+      "operation": "settings.repo-metadata",
+      "version": 1,
+      "family": "settings.repo-metadata",
+      "sites": ["mobile/src/host-screen/use-host-repo-metadata.ts"],
+      "schedules": ["settings-first"],
+      "steps": [
+        {
+          "action": "mount",
+          "id": "mount"
+        },
+        {
+          "action": "load",
+          "id": "load"
+        },
+        {
+          "complete": "repo.list#1",
+          "params": {
+            "$undefined": true
+          },
+          "reply": {
+            "ok": true,
+            "result": {
+              "repos": [
+                {
+                  "id": "repo-1",
+                  "displayName": "Lucide",
+                  "badgeColor": "#123456",
+                  "repoIcon": {
+                    "type": "lucide",
+                    "name": "Rocket"
+                  },
+                  "connectionId": null
+                },
+                {
+                  "id": "repo-2",
+                  "displayName": "Emoji",
+                  "repoIcon": {
+                    "type": "emoji",
+                    "emoji": "🐳"
+                  },
+                  "connectionId": "ssh-1"
+                },
+                {
+                  "id": "repo-3",
+                  "displayName": "Avatar",
+                  "repoIcon": {
+                    "type": "image",
+                    "src": "https://github.com/acme.png?size=64",
+                    "source": "github",
+                    "label": "acme/orca"
+                  },
+                  "executionHostId": "ssh:ssh-1"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "complete": "ssh.listTargetSummaries#1",
+          "params": {
+            "$undefined": true
+          },
+          "reply": {
+            "ok": true,
+            "result": {
+              "targets": [
+                {
+                  "id": "ssh-1",
+                  "label": "SSH"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "checkpoint": "settings-pending"
+        },
+        {
+          "complete": "settings.get#1",
+          "params": {
+            "$undefined": true
+          },
+          "reply": {
+            "ok": true,
+            "result": {
+              "settings": {
+                "defaultTuiAgent": "codex",
+                "disabledTuiAgents": [],
+                "hostSettingOverrides": {}
+              }
+            }
+          }
+        },
+        {
+          "complete": "host.platform#1",
+          "params": {
+            "$undefined": true
+          },
+          "reply": {
+            "ok": true,
+            "result": {
+              "platform": "darwin"
+            }
+          }
+        },
+        {
+          "checkpoint": "settled"
+        }
+      ]
+    },
+    {
       "id": "settings-repo-metadata-refused",
       "operation": "settings.repo-metadata",
       "version": 1,
@@ -13729,6 +13841,55 @@
                   "id": "whisper-small",
                   "name": "Small",
                   "status": "ready"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "checkpoint": "settled"
+        }
+      ]
+    },
+    {
+      "id": "speech-setup-sheet-model-vocabulary",
+      "operation": "speech.setup-sheet",
+      "version": 1,
+      "family": "speech.setup-sheet",
+      "sites": ["mobile/src/dictation/mobile-dictation-setup.ts"],
+      "schedules": [],
+      "steps": [
+        {
+          "action": "list",
+          "id": "list"
+        },
+        {
+          "complete": "speech.models.list#1",
+          "params": null,
+          "reply": {
+            "ok": true,
+            "result": {
+              "enabled": true,
+              "selectedModelId": "gpt-4o-transcribe",
+              "dictationMode": "hold",
+              "models": [
+                {
+                  "id": "whisper-small",
+                  "label": "Small",
+                  "provider": "local",
+                  "status": "downloading",
+                  "sizeBytes": 466862080,
+                  "progress": 0.42,
+                  "recommended": true
+                },
+                {
+                  "id": "gpt-4o-transcribe",
+                  "label": "OpenAI",
+                  "provider": "openai",
+                  "status": "ready",
+                  "sizeBytes": null,
+                  "progress": null,
+                  "recommended": false
                 }
               ]
             }
